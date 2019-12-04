@@ -4,7 +4,7 @@ set -xe
 
 THIS=$(dirname "$0")
 
-source ../../taskcluster/tc-tests-utils.sh
+source $HOME/DeepSpeech/ds/taskcluster/tc-tests-utils.sh
 
 DEP_TASK_ID=$(curl -s https://community-tc.services.mozilla.com/api/queue/v1/task/${TASK_ID} | python -c 'import json; import sys; print(" ".join(json.loads(sys.stdin.read())["dependencies"]));')
 

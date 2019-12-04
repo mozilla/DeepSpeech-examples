@@ -17,8 +17,10 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 * `VAD transcriber  <vad_transcriber/README.rst>`_
 
 **Javascript:**
+
 * `FFMPEG VAD streaming  <ffmpeg_vad_streaming/README.rst>`_
 * `Nodejs wav  <nodejs_wav/README.rst>`_
 
-** C#/.NET **
+**C#/.NET:**
+
 * `Net framework  <net_framework/README.rst>`_

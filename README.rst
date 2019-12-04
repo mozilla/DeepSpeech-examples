@@ -7,7 +7,7 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 
 **Note:** These examples target DeepSpeech **master branch** only. If you're using a different release, you need to go to the corresponding branch for the release:
 
-* `v0.6.x <github.com/mozilla/DeepSpeech-examples/tree/r0.6>`_
+* `v0.6.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.6>`_
 
 **List of examples**
 

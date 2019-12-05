@@ -15,13 +15,13 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 **Python:**
 
 * `Microphone VAD streaming  <mic_vad_streaming/README.rst>`_
-* `VAD transcriber  <vad_transcriber/README.rst>`_
+* `VAD transcriber  <vad_transcriber/>`_
 
 **Javascript:**
 
-* `FFMPEG VAD streaming  <ffmpeg_vad_streaming/README.rst>`_
-* `Nodejs wav  <nodejs_wav/README.rst>`_
+* `FFMPEG VAD streaming  <ffmpeg_vad_streaming/README.MD>`_
+* `Node.JS wav <nodejs_wav/Readme.md>`_
 
 **C#/.NET:**
 
-* `.NET framework  <net_framework/README.rst>`_
+* `.NET framework <net_framework/>`_

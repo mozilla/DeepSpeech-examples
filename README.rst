@@ -16,7 +16,6 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 
 * `Microphone VAD streaming  <mic_vad_streaming/README.rst>`_
 * `VAD transcriber  <vad_transcriber/>`_
-* `Qt For Python Voice assistant <https://github.com/marimeireles/virtual-assistant>`_
 
 **Javascript:**
 

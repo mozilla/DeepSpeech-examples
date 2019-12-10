@@ -131,7 +131,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\native_client\dotnet\DeepSpeechClient\DeepSpeechClient.csproj">
+    <ProjectReference Include="..\..\..\DeepSpeech\native_client\dotnet\DeepSpeechClient\DeepSpeechClient.csproj">
       <Project>{56de4091-bbbe-47e4-852d-7268b33b971f}</Project>
       <Name>DeepSpeechClient</Name>
     </ProjectReference>

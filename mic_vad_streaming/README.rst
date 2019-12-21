@@ -9,12 +9,6 @@ Installation
 
 .. code-block:: bash
 
-   pip install -r requirements.txt
-
-Uses portaudio for microphone access, so on Linux, you may need to install its header files to compile the ``pyaudio`` package:
-
-.. code-block:: bash
-
    sudo apt install portaudio19-dev
 
 Installation on MacOS may fail due to portaudio, use brew to install it:
@@ -22,6 +16,14 @@ Installation on MacOS may fail due to portaudio, use brew to install it:
 .. code-block:: bash
 
    brew install portaudio
+
+.. code-block:: bash
+
+   pip install -r requirements.txt
+
+Uses portaudio for microphone access, so on Linux, you may need to install its header files to compile the ``pyaudio`` package:
+
+
 
 Usage
 -----

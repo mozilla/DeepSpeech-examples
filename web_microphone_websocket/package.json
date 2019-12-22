@@ -1,0 +1,45 @@
+{
+  "name": "web-microphone-websocket",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "deepspeech": "^0.6.0",
+    "defaults": "^1.0.3",
+    "mocha": "^6.1.4",
+    "node-vad": "^1.1.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "3.3.0",
+    "should": "^13.2.3",
+    "should-http": "^0.1.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test:client": "react-scripts test --env=jsdom --watchAll=false --coverage",
+    "test:server": "NODE_ENV=dev mocha --recursive ./test/config.js ./test --exit",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

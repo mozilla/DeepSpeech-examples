@@ -37,7 +37,7 @@ let recordedAudioLength = 0;
 let endTimeout = null;
 let silenceBuffers = [];
 
-function processMicrophone(data, callback) {
+function processAudioStream(data, callback) {
 	vad.processAudio(data, 16000).then((res) => {
 		switch (res) {
 			case VAD.Event.ERROR:
@@ -52,17 +52,31 @@ function processMicrophone(data, callback) {
 			case VAD.Event.VOICE:
 				processVoice(data);
 				break;
+			default:
+				console.log('default', res);
+				
 		}
 	});
 	
 	// timeout after 1s of inactivity
 	clearTimeout(endTimeout);
 	endTimeout = setTimeout(function() {
-		resetMicrophone();
+		console.log('timeout');
+		resetAudioStream();
 	},1000);
 }
 
-function resetMicrophone() {
+function endAudioStream(callback) {
+	console.log('[end]');
+	let results = intermediateDecode();
+	if (results) {
+		if (callback) {
+			callback(results);
+		}
+	}
+}
+
+function resetAudioStream() {
 	clearTimeout(endTimeout);
 	console.log('[reset]');
 	intermediateDecode(); // ignore results
@@ -196,14 +210,20 @@ io.on('connection', function(socket) {
 	
 	createStream();
 	
-	socket.on('microphone-data', function(data) {
-		processMicrophone(data, (results) => {
+	socket.on('stream-data', function(data) {
+		processAudioStream(data, (results) => {
 			socket.emit('recognize', results);
 		});
 	});
 	
-	socket.on('microphone-reset', function() {
-		resetMicrophone();
+	socket.on('stream-end', function() {
+		endAudioStream((results) => {
+			socket.emit('recognize', results);
+		});
+	});
+	
+	socket.on('stream-reset', function() {
+		resetAudioStream();
 	});
 });
 

@@ -15,13 +15,9 @@ let audioFile3 = process.env.HOME + '/DeepSpeech/audio/4507-16021-0012.wav';
 let socket;
 
 before(function(done) {
+	console.log('before');
 	socket = io.connect(url, {});
-	
-	socket.once('server-ready', () => {
-		done();
-	});
-	
-	socket.emit('client-ready');
+	done();
 });
 
 describe('GET /', function() {
@@ -38,15 +34,18 @@ describe('GET /', function() {
 
 describe('Websocket Audio', function() {
 	
-	it('audioFile1: experience proofs less', function(done) {
+	it('audioFile1: experience proof this', function(done) {
 		socket.once('recognize', (results) => {
-			expect(results.text).to.be.equal('experience proofs less');
+			expect(results.text).to.be.equal('experience proof this');
 			done();
 		});
 		
-		fs.createReadStream(audioFile1)
+		fs.createReadStream(audioFile1, {highWaterMark: 4096})
 		.on('data', function (chunk) {
 			socket.emit('microphone-data', chunk);
+		})
+		.on('end', function () {
+			socket.emit('microphone-end');
 		});
 	});
 	
@@ -55,23 +54,29 @@ describe('Websocket Audio', function() {
 			expect(results.text).to.be.equal('your power is sufficient i said');
 			done();
 		});
-		
-		fs.createReadStream(audioFile2)
+
+		fs.createReadStream(audioFile2, {highWaterMark: 4096})
 		.on('data', function (chunk) {
 			socket.emit('microphone-data', chunk);
+		})
+		.on('end', function () {
+			socket.emit('microphone-end');
 		});
 	});
-	
+
 	it('audioFile3: why should one halt on the way', function(done) {
 		socket.once('recognize', (results) => {
 			expect(results.text).to.be.equal('why should one halt on the way');
 			done();
 		});
-		
-		fs.createReadStream(audioFile3)
+
+		fs.createReadStream(audioFile3, {highWaterMark: 4096})
 		.on('data', function (chunk) {
 			socket.emit('microphone-data', chunk);
+		})
+		.on('end', function () {
+			socket.emit('microphone-end');
 		});
-		
+
 	});
 });

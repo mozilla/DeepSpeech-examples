@@ -80,7 +80,7 @@ class App extends Component {
 		downsampler.postMessage({command: "init", inputSampleRate: sampleRate});
 		downsampler.onmessage = (e) => {
 			if (this.socket.connected) {
-				this.socket.emit('microphone-data', e.data.buffer);
+				this.socket.emit('stream-data', e.data.buffer);
 			}
 		};
 		
@@ -150,7 +150,7 @@ class App extends Component {
 	stopRecording = e => {
 		if (this.state.recording) {
 			if (this.socket.connected) {
-				this.socket.emit('microphone-reset');
+				this.socket.emit('stream-reset');
 			}
 			clearInterval(this.recordingInterval);
 			this.setState({

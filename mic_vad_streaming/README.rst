@@ -9,7 +9,7 @@ Installation
 
 .. code-block:: bash
 
-   sudo apt install portaudio19-dev
+   sudo apt install portaudio19-dev python3-dev
 
 Installation on MacOS may fail due to portaudio, use brew to install it:
 

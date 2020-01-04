@@ -1,6 +1,9 @@
 const DeepSpeech = require('deepspeech');
 const VAD = require('node-vad');
 const mic = require('mic');
+const fs = require('fs');
+const wav = require('wav');
+const Speaker = require('speaker');
 
 let DEEPSPEECH_MODEL; // path to deepspeech model directory
 if (process.env.DEEPSPEECH_MODEL) {
@@ -39,9 +42,15 @@ let silenceStart = null;
 let recordedAudioLength = 0;
 let endTimeout = null;
 let silenceBuffers = [];
+let firstChunkVoice = false;
 
 function processAudioStream(data, callback) {
 	vad.processAudio(data, 16000).then((res) => {
+		if (firstChunkVoice) {
+			firstChunkVoice = false;
+			processVoice(data);
+			return;
+		}
 		switch (res) {
 			case VAD.Event.ERROR:
 				console.log("VAD ERROR");
@@ -65,7 +74,7 @@ function processAudioStream(data, callback) {
 	endTimeout = setTimeout(function() {
 		console.log('timeout');
 		resetAudioStream();
-	},1000);
+	},SILENCE_THRESHOLD*3);
 }
 
 function endAudioStream(callback) {
@@ -235,4 +244,24 @@ function onRecognize(results) {
 	}
 }
 
-startMicrophone(onRecognize);
+if (process.argv[2]) {
+	// if an audio file is supplied as an argument, play through the speakers to be picked up by the microphone
+	console.log('play audio file', process.argv[2]);
+	var file = fs.createReadStream(process.argv[2]);
+	var reader = new wav.Reader();
+	reader.on('format', function (format) {
+		firstChunkVoice = true;   // override vad for this test
+		SILENCE_THRESHOLD = 1000; // override silence (debounce time)
+		startMicrophone(function(results) {
+			console.log(results);
+			process.exit();
+		});
+		setTimeout(function() {
+			reader.pipe(new Speaker(format));
+		},900);
+	});
+	file.pipe(reader);
+}
+else {
+	startMicrophone(onRecognize);
+}

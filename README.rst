@@ -20,6 +20,7 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 **Javascript:**
 
 * `FFMPEG VAD streaming  <ffmpeg_vad_streaming/README.MD>`_
+* `Node.JS microphone VAD streaming <nodejs_mic_vad_streaming/Readme.md>`_
 * `Node.JS wav <nodejs_wav/Readme.md>`_
 * `Web Microphone Websocket streaming <web_microphone_websocket/Readme.md>`_
 

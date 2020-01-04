@@ -1,0 +1,10 @@
+{
+  "name": "nodejs_mic_vad_streaming",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "deepspeech": "^0.6.0",
+    "mic": "^2.1.2",
+    "node-vad": "^1.1.4"
+  }
+}

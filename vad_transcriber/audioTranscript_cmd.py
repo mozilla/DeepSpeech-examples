@@ -73,7 +73,11 @@ def main(args):
         print("%-30s %-20.3f %-20.3f %-20.3f %-0.3f" % (filename + ext, audio_length, inference_time, model_retval[1], model_retval[2]))
     else:
         sctx = model_retval[0].createStream()
-        subproc = subprocess.Popen(shlex.split('rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'),
+        if os.name == 'nt': # Windows
+            command = 'sox -d -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'
+        else:
+            command = 'rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'
+        subproc = subprocess.Popen(shlex.split(command),
                                    stdout=subprocess.PIPE,
                                    bufsize=0)
         print('You can start speaking now. Press Control-C to stop recording.')

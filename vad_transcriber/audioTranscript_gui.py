@@ -284,7 +284,11 @@ class App(QMainWindow):
             logging.debug("Preparing for transcription...")
 
             sctx = self.model[0].createStream()
-            subproc = subprocess.Popen(shlex.split('rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'),
+            if os.name == 'nt': # Windows
+                command = 'sox -d -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'
+            else:
+                command = 'rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'
+            subproc = subprocess.Popen(shlex.split(command),
                                        stdout=subprocess.PIPE,
                                        bufsize=0)
             self.textboxTranscript.insertPlainText('You can start speaking now\n\n')

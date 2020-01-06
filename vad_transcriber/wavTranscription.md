@@ -14,9 +14,13 @@ Fedora:
 
 Tested on: 29
 
-Ubuntu/Debian
+Ubuntu/Debian:
 
 ``` sudo apt install sox ```
+
+Windows
+
+Download sox 14.4.1 from https://sourceforge.net/projects/sox/files/sox/14.4.1/ and add sox to PATH.
 
 A list of distributions where the package is available can be found at: https://pkgs.org/download/sox
 

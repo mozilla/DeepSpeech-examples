@@ -27,3 +27,7 @@ It is a good way to just try out DeepSpeech, without much knowledge on how DeepS
 **C#/.NET:**
 
 * `.NET framework <net_framework/>`_
+
+**Java/Android**
+
+* `mozilla/androidspeech library <https://github.com/mozilla/androidspeech/>`_

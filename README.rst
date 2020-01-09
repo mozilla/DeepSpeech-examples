@@ -3,7 +3,7 @@ DeepSpeech 0.6.x Examples
 
 There are various examples on how to use or integrate DeepSpeech using our packages.
 
-It is a good way to just try out DeepSpeech before learning how it works in detail, as well as a source of inspiration for ways you can integrate it into your application or solve common tasks like Voice Activity Detection or microphone streaming.
+It is a good way to just try out DeepSpeech before learning how it works in detail, as well as a source of inspiration for ways you can integrate it into your application or solve common tasks like voice activity detection (VAD) or microphone streaming.
 
 Contributions are welcome!
 

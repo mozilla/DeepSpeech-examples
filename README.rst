@@ -14,22 +14,27 @@ Contributions are welcome!
 
 **List of examples**
 
-**Python:**
+Python:
+-------
 
 * `Microphone VAD streaming  <mic_vad_streaming/README.rst>`_
 * `VAD transcriber  <vad_transcriber/>`_
 
-**Javascript:**
+JavaScript:
+-----------
 
 * `FFMPEG VAD streaming  <ffmpeg_vad_streaming/README.MD>`_
 * `Node.JS microphone VAD streaming <nodejs_mic_vad_streaming/Readme.md>`_
 * `Node.JS wav <nodejs_wav/Readme.md>`_
 * `Web Microphone Websocket streaming <web_microphone_websocket/Readme.md>`_
 
-**C#/.NET:**
+C#/.NET:
+--------
 
 * `.NET framework <net_framework/>`_
 
-**Java/Android**
+Java/Android:
+-------------
 
 * `mozilla/androidspeech library <https://github.com/mozilla/androidspeech/>`_
+  

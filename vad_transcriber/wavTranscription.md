@@ -23,7 +23,7 @@ A list of distributions where the package is available can be found at: https://
 #### 0.1 Download Deepspeech 
 Either clone from git via git clone, or Download a version from the release page
 
-For the next steps we assume you have extracted the files to ~/Deepspeech
+For the next steps we assume you have extracted the files to `~/Deepspeech`
 
 
 #### 0.2 Setup your environment
@@ -64,7 +64,7 @@ Set the aggressiveness mode, to an integer between 0 and 3.
 $ python3 audioTranscript_cmd.py --aggressive 1 --audio ./audio/guido-van-rossum.wav --model ./models/0.4.1/
 
 
-Filename                       Duration(s)          Inference Time(s)    Model Load Time(s)   LM Load Time(s)
+Filename                       Duration(s)          Inference Time(s)    Model Load Time(s)   Scorer Load Time(s)
 sample_rec.wav                 13.710               20.797               5.593                17.742
 
 ```

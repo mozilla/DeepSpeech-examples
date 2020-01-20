@@ -156,16 +156,14 @@ def main(ARGS):
     if os.path.isdir(ARGS.model):
         model_dir = ARGS.model
         ARGS.model = os.path.join(model_dir, 'output_graph.pb')
-        ARGS.lm = os.path.join(model_dir, ARGS.lm)
-        ARGS.trie = os.path.join(model_dir, ARGS.trie)
+        ARGS.scorer = os.path.join(model_dir, ARGS.scorer)
 
     print('Initializing model...')
     logging.info("ARGS.model: %s", ARGS.model)
     model = deepspeech.Model(ARGS.model, ARGS.beam_width)
-    if ARGS.lm and ARGS.trie:
-        logging.info("ARGS.lm: %s", ARGS.lm)
-        logging.info("ARGS.trie: %s", ARGS.trie)
-        model.enableDecoderWithLM(ARGS.lm, ARGS.trie, ARGS.lm_alpha, ARGS.lm_beta)
+    if ARGS.scorer:
+        logging.info("ARGS.scorer: %s", ARGS.scorer)
+        model.enableExternalScorer(ARGS.scorer)
 
     # Start audio with VAD
     vad_audio = VADAudio(aggressiveness=ARGS.vad_aggressiveness,
@@ -185,7 +183,7 @@ def main(ARGS):
         if frame is not None:
             if spinner: spinner.start()
             logging.debug("streaming frame")
-            model.feedAudioContent(stream_context, np.frombuffer(frame, np.int16))
+            stream_context.feedAudioContent(np.frombuffer(frame, np.int16))
             if ARGS.savewav: wav_data.extend(frame)
         else:
             if spinner: spinner.stop()
@@ -193,15 +191,13 @@ def main(ARGS):
             if ARGS.savewav:
                 vad_audio.write_wav(os.path.join(ARGS.savewav, datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav")), wav_data)
                 wav_data = bytearray()
-            text = model.finishStream(stream_context)
+            text = stream_context.finishStream()
             print("Recognized: %s" % text)
             stream_context = model.createStream()
 
 if __name__ == '__main__':
     BEAM_WIDTH = 500
     DEFAULT_SAMPLE_RATE = 16000
-    LM_ALPHA = 0.75
-    LM_BETA = 1.85
 
     import argparse
     parser = argparse.ArgumentParser(description="Stream from microphone to DeepSpeech using VAD")
@@ -217,18 +213,12 @@ if __name__ == '__main__':
 
     parser.add_argument('-m', '--model', required=True,
                         help="Path to the model (protocol buffer binary file, or entire directory containing all standard-named files for model)")
-    parser.add_argument('-l', '--lm', default='lm.binary',
-                        help="Path to the language model binary file. Default: lm.binary")
-    parser.add_argument('-t', '--trie', default='trie',
-                        help="Path to the language model trie file created with native_client/generate_trie. Default: trie")
+    parser.add_argument('-s', '--scorer', default='kenlm.scorer',
+                        help="Path to the external scorer file. Default: kenlm.scorer")
     parser.add_argument('-d', '--device', type=int, default=None,
                         help="Device input index (Int) as listed by pyaudio.PyAudio.get_device_info_by_index(). If not provided, falls back to PyAudio.get_default_device().")
     parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE,
                         help=f"Input device sample rate. Default: {DEFAULT_SAMPLE_RATE}. Your device may require 44100.")
-    parser.add_argument('-la', '--lm_alpha', type=float, default=LM_ALPHA,
-                        help=f"The alpha hyperparameter of the CTC decoder. Language Model weight. Default: {LM_ALPHA}")
-    parser.add_argument('-lb', '--lm_beta', type=float, default=LM_BETA,
-                        help=f"The beta hyperparameter of the CTC decoder. Word insertion bonus. Default: {LM_BETA}")
     parser.add_argument('-bw', '--beam_width', type=int, default=BEAM_WIDTH,
                         help=f"Beam width used in the CTC decoder when building candidate transcriptions. Default: {BEAM_WIDTH}")
 

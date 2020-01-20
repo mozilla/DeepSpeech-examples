@@ -12,12 +12,9 @@ let model = new DeepSpeech.Model(modelPath, BEAM_WIDTH);
 
 let desiredSampleRate = model.sampleRate();
 
-const LM_ALPHA = 0.75;
-const LM_BETA = 1.85;
-let lmPath = './models/lm.binary';
-let triePath = './models/trie';
+let scorerPath = './models/kenlm.scorer';
 
-model.enableDecoderWithLM(lmPath, triePath, LM_ALPHA, LM_BETA);
+model.enableExternalScorer(scorerPath);
 
 let audioFile = process.argv[2] || './audio/2830-3980-0043.wav';
 

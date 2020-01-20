@@ -11,8 +11,7 @@ Edit references to models path if necessary:
 
 ```
 let modelPath = './models/output_graph.pbmm';
-let lmPath = './models/lm.binary';
-let triePath = './models/trie';
+let scorerPath = './models/kenlm.scorer';
 ```
 
 Install Sox (for .wav file loading):

@@ -8,13 +8,12 @@ pushd ${THIS}
   source ../tests.sh
 
   pip install --user $(get_python_wheel_url "$1")
-  pip install --user -r requirements.txt
+  pip install --user -r <(grep -v deepspeech requirements.txt)
 
   pulseaudio &
 
   python mic_vad_streaming.py \
 	  --model $HOME/DeepSpeech/models/output_graph.pbmm \
-	  --lm $HOME/DeepSpeech/models/lm.binary \
-	  --trie $HOME/DeepSpeech/models/trie \
+	  --scorer $HOME/DeepSpeech/models/kenlm.scorer \
 	  --file $HOME/DeepSpeech/audio/2830-3980-0043.wav
 popd

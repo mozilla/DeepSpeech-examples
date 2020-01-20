@@ -24,17 +24,16 @@ namespace DeepSpeech.WPF.ViewModels
     {
         #region Constants
         private const int SampleRate = 16000;
-        private const string LMPath = "lm.binary";
-        private const string TriePath = "trie";
+        private const string ScorerPath = "kenlm.scorer";
         #endregion
 
         private readonly IDeepSpeech _sttClient;
 
         #region Commands
         /// <summary>
-        /// Gets or sets the command that enables the language model.
+        /// Gets or sets the command that enables the external scorer.
         /// </summary>
-        public IAsyncCommand EnableLanguageModelCommand { get; private set; }
+        public IAsyncCommand EnableExternalScorerCommand { get; private set; }
 
         /// <summary>
         /// Gets or sets the command that runs inference using an audio file.
@@ -146,15 +145,15 @@ namespace DeepSpeech.WPF.ViewModels
             set => SetProperty(ref _statusMessage, value);
         }
 
-        private bool _languageModelEnabled;
+        private bool _externalScorerEnabled;
         /// <summary>
-        /// Gets or sets the language model status.
+        /// Gets or sets the external scorer status.
         /// </summary>
-        private bool LanguageModelEnabled
+        private bool ExternalScorerEnabled
         {
-            get => _languageModelEnabled;
-            set => SetProperty(ref _languageModelEnabled, value,
-                    onChanged: () => ((AsyncCommand)EnableLanguageModelCommand).RaiseCanExecuteChanged());
+            get => _externalScorerEnabled;
+            set => SetProperty(ref _externalScorerEnabled, value,
+                    onChanged: () => ((AsyncCommand)EnableExternalScorerCommand).RaiseCanExecuteChanged());
         }
 
         private bool _isRunningInference;
@@ -205,8 +204,8 @@ namespace DeepSpeech.WPF.ViewModels
         {
             _sttClient = sttClient;
 
-            EnableLanguageModelCommand = new AsyncCommand(()=>EnableLanguageModelAsync(LMPath,TriePath),
-                _ => !LanguageModelEnabled);
+            EnableExternalScorerCommand = new AsyncCommand(()=>EnableExternalScorerAsync(ScorerPath),
+                _ => !ExternalScorerEnabled);
 
             InferenceFromFileCommand = new AsyncCommand(ExecuteInferenceFromFileAsync,
                 _ => !IsRunningInference);
@@ -322,21 +321,18 @@ namespace DeepSpeech.WPF.ViewModels
         }
        
         /// <summary>
-        /// Enables the language model.
+        /// Enables the external scorer.
         /// </summary>
-        /// <param name="lmPath">Language model path.</param>
-        /// <param name="triePath">Trie path.</param>
+        /// <param name="scorerPath">External scorer path.</param>
         /// <returns>A Task to await.</returns>
-        public async Task EnableLanguageModelAsync(string lmPath, string triePath)
+        public async Task EnableExternalScorerAsync(string scorerPath)
         {
             try
             {
-                StatusMessage = "Loading language model...";
-                const float LM_ALPHA = 0.75f;
-                const float LM_BETA = 1.85f;
-                await Task.Run(() => _sttClient.EnableDecoderWithLM(LMPath, TriePath, LM_ALPHA, LM_BETA));
-                LanguageModelEnabled = true;
-                StatusMessage = "Language model loaded.";
+                StatusMessage = "Loading external scorer...";
+                await Task.Run(() => _sttClient.EnableExternalScorer(ScorerPath));
+                ExternalScorerEnabled = true;
+                StatusMessage = "External scorer loaded.";
             }
             catch (Exception ex)
             {

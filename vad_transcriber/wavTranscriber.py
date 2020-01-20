@@ -8,28 +8,25 @@ from timeit import default_timer as timer
 '''
 Load the pre-trained model into the memory
 @param models: Output Grapgh Protocol Buffer file
-@param lm: Language model file
-@param trie: Trie file
+@param scorer: Scorer file
 
 @Retval
-Returns a list [DeepSpeech Object, Model Load Time, LM Load Time]
+Returns a list [DeepSpeech Object, Model Load Time, Scorer Load Time]
 '''
-def load_model(models, lm, trie):
+def load_model(models, scorer):
     BEAM_WIDTH = 500
-    LM_ALPHA = 0.75
-    LM_BETA = 1.85
 
     model_load_start = timer()
     ds = Model(models, BEAM_WIDTH)
     model_load_end = timer() - model_load_start
     logging.debug("Loaded model in %0.3fs." % (model_load_end))
 
-    lm_load_start = timer()
-    ds.enableDecoderWithLM(lm, trie, LM_ALPHA, LM_BETA)
-    lm_load_end = timer() - lm_load_start
-    logging.debug('Loaded language model in %0.3fs.' % (lm_load_end))
+    scorer_load_start = timer()
+    ds.enableExternalScorer(scorer)
+    scorer_load_end = timer() - scorer_load_start
+    logging.debug('Loaded external scorer in %0.3fs.' % (scorer_load_end))
 
-    return [ds, model_load_end, lm_load_end]
+    return [ds, model_load_end, scorer_load_end]
 
 '''
 Run Inference on input audio file
@@ -60,18 +57,16 @@ Resolve directory path for the models and fetch each of them.
 @param dirName: Path to the directory containing pre-trained models
 
 @Retval:
-Retunns a tuple containing each of the model files (pb, lm and trie)
+Retunns a tuple containing each of the model files (pb, scorer)
 '''
 def resolve_models(dirName):
     pb = glob.glob(dirName + "/*.pb")[0]
     logging.debug("Found Model: %s" % pb)
 
-    lm = glob.glob(dirName + "/lm.binary")[0]
-    trie = glob.glob(dirName + "/trie")[0]
-    logging.debug("Found Language Model: %s" % lm)
-    logging.debug("Found Trie: %s" % trie)
+    scorer = glob.glob(dirName + "/kenlm.scorer")[0]
+    logging.debug("Found scorer: %s" % scorer)
 
-    return pb, lm, trie
+    return pb, scorer
 
 '''
 Generate VAD segments. Filters out non-voiced audio frames.

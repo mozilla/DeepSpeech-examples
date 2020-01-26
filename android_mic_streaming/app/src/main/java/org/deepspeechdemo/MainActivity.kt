@@ -1,4 +1,4 @@
-package org.mozilla.deepspeechdemo
+package org.deepspeechdemo
 
 import android.Manifest
 import android.content.pm.PackageManager

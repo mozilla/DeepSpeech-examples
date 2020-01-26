@@ -13,34 +13,6 @@
         android:padding="100px">
 
         <TextView
-            android:id="@+id/labelModelsPathInput"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Models path"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <EditText
-            android:id="@+id/modelsPathInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:inputType="text" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Path to the directory where the tflite model (output_graph.tflite) and the language models (lm.binary, trie) are stored."
-            android:textSize="12sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@android:dimen/app_icon_size" />
-
-        <TextView
             android:id="@+id/labelStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

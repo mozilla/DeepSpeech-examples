@@ -35,19 +35,18 @@ class MainActivity : AppCompatActivity() {
     private val NUM_BUFFER_ELEMENTS = 1024
     private val BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
 
-    private fun checkPermissions() {
-        val permissions = arrayOf(
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.READ_EXTERNAL_STORAGE
-        )
+    private val TFLITE_MODEL_FILENAME = "output_graph.tflite"
+    private val LANGUAGE_MODEL_FILENAME = "lm.binary"
+    private val TRIE_FILENAME = "trie"
 
+    private fun checkAudioPermission() {
         // permission is automatically granted on sdk < 23 upon installation
         if (Build.VERSION.SDK_INT >= 23)
         {
-            for (permission in permissions) {
-                if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this, arrayOf(permission), 3)
-                }
+            val permission = Manifest.permission.RECORD_AUDIO
+
+            if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, arrayOf(permission), 3)
             }
         }
     }
@@ -68,19 +67,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createModel(): Boolean {
-        val modelsPath = modelsPathInput.text.toString()
-        val tflitePath = "$modelsPath/output_graph.tflite"
-        val languageModelPath = "$modelsPath/lm.binary"
-        val triePath = "$modelsPath/trie"
+        val modelsPath = getExternalFilesDir(null).toString()
+        val tfliteModelPath = "$modelsPath/$TFLITE_MODEL_FILENAME"
+        val languageModelPath = "$modelsPath/$LANGUAGE_MODEL_FILENAME"
+        val triePath = "$modelsPath/$TRIE_FILENAME"
 
-        for (path in listOf(tflitePath, languageModelPath, triePath)) {
+        for (path in listOf(tfliteModelPath, languageModelPath, triePath)) {
             if (!(File(path).exists())) {
                 status.text = "Model creation failed: $path does not exist."
                 return false
             }
         }
 
-        model = DeepSpeechModel(tflitePath, BEAM_WIDTH)
+        model = DeepSpeechModel(tfliteModelPath, BEAM_WIDTH)
         model?.enableDecoderWihLM(languageModelPath, triePath, LM_ALPHA, LM_BETA)
         return true
     }
@@ -101,12 +100,14 @@ class MainActivity : AppCompatActivity() {
             btnStartInference.text = "Stop Recording"
             streamContext = model.createStream()
 
-            recorder = AudioRecord(
-                MediaRecorder.AudioSource.VOICE_RECOGNITION,
-                model.sampleRate(),
-                RECORDER_CHANNELS,
-                RECORDER_AUDIO_ENCODING,
-                NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
+            if (recorder == null) {
+                recorder = AudioRecord(
+                    MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                    model.sampleRate(),
+                    RECORDER_CHANNELS,
+                    RECORDER_AUDIO_ENCODING,
+                    NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
+            }
 
             recorder?.startRecording()
             isRecording = true
@@ -120,10 +121,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getExternalFilesDir(null)
         setContentView(R.layout.activity_main)
-        checkPermissions()
+        checkAudioPermission()
 
-        modelsPathInput.setText("/sdcard/deepspeech")
+        // create application data directory on the device
+        getExternalFilesDir(null)
+
         status.text = "Ready, waiting ..."
     }
 
@@ -135,8 +139,6 @@ class MainActivity : AppCompatActivity() {
         transcription.text = decoded
 
         recorder?.stop()
-        recorder?.release()
-        recorder = null
     }
 
     fun onRecordClick(v: View?) {

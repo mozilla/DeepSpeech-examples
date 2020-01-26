@@ -12,13 +12,19 @@ curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.1/deepspee
 tar xvf deepspeech-0.6.1-models.tar.gz
 ```
 
-#### Android device
+Move the model files `output_graph.tflite`, `lm.binary`, `trie` to the demo application's data directory on your android device.  
+Mind that the data directory will only be present after installing and launching the app once.
 
-Connect an android device and move a folder (e.g. named `deepspeech`) containing the model files `output_graph.tflite`, `lm.binary`, `trie` to a location of your choice on the device (for example `/sdcard/`).
+```
+cd deepspeech-0.6.1-models
+adb push output_graph.tflite lm.binary trie /storage/emulated/0/Android/data/org.deepspeechdemo/files/
+```
 
-#### USB Debugging
+You can also copy the files from your file browser to the device.
 
-Make sure to enable USB-Debugging in the developer settings of your connected android device. If haven't already, you can activate your developer settings by following [this guide from android](https://developer.android.com/studio/debug/dev-options#enable).
+#### Android device with USB Debugging
+
+Connect an android device and make sure to enable USB-Debugging in the developer settings of the device. If haven't already, you can activate your developer settings by following [this guide from android](https://developer.android.com/studio/debug/dev-options#enable).
 
 ## Installation
 
@@ -38,8 +44,7 @@ Run the app and your connected android device.
 
 ## Usage
 
-In the app, specify the path to the models directory (e.g. `/sdcard/deepspeech`).  
-Start recording and the app will transcribe the spoken text.
+Start recording by pressing the button and the app will transcribe the spoken text.
 
 ## Fine-tuning the Recognition
 

@@ -26,15 +26,14 @@ class MainActivity : AppCompatActivity() {
     private val LM_ALPHA = 0.75f
     private val LM_BETA = 1.85f
 
-    private val RECORDER_SAMPLERATE = 16000
     private val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
     private val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
     private var recorder: AudioRecord? = null
     private var recordingThread: Thread? = null
     private var isRecording: Boolean = false
 
-    private var NUM_BUFFER_ELEMENTS = 1024
-    private var BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
+    private val NUM_BUFFER_ELEMENTS = 1024
+    private val BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
 
     private fun checkPermissions() {
         val permissions = arrayOf(
@@ -98,21 +97,22 @@ class MainActivity : AppCompatActivity() {
             status.append("Model already created.\n")
         }
 
-        btnStartInference.text = "Stop Recording"
+        model?.let { model ->
+            btnStartInference.text = "Stop Recording"
+            streamContext = model.createStream()
 
-        streamContext = model?.createStream()
+            recorder = AudioRecord(
+                MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                model.sampleRate(),
+                RECORDER_CHANNELS,
+                RECORDER_AUDIO_ENCODING,
+                NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
 
-        recorder = AudioRecord(
-            MediaRecorder.AudioSource.VOICE_RECOGNITION,
-            RECORDER_SAMPLERATE,
-            RECORDER_CHANNELS,
-            RECORDER_AUDIO_ENCODING,
-            NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
-
-        recorder?.startRecording()
-        isRecording = true
-        recordingThread = Thread(Runnable { transcribe() }, "AudioRecorder Thread")
-        recordingThread?.start()
+            recorder?.startRecording()
+            isRecording = true
+            recordingThread = Thread(Runnable { transcribe() }, "AudioRecorder Thread")
+            recordingThread?.start()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

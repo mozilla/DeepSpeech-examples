@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             )
             model?.feedAudioContent(streamContext, audioData, audioData.size)
             val decoded = model?.intermediateDecode(streamContext)
-            transcription.text = decoded
+            runOnUiThread { transcription.text = decoded }
         }
     }
 
@@ -110,8 +110,11 @@ class MainActivity : AppCompatActivity() {
 
             recorder?.startRecording()
             isRecording = true
-            recordingThread = Thread(Runnable { transcribe() }, "AudioRecorder Thread")
-            recordingThread?.start()
+
+            if (recordingThread == null) {
+                recordingThread = Thread(Runnable { transcribe() }, "AudioRecorder Thread")
+                recordingThread?.start()
+            }
         }
     }
 
@@ -126,7 +129,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun stopListening() {
         isRecording = false
-        recordingThread = null
         btnStartInference.text = "Start Recording"
 
         val decoded = model?.finishStream(streamContext)

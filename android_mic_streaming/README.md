@@ -40,3 +40,9 @@ Run the app and your connected android device.
 
 In the app, specify the path to the models directory (e.g. `/sdcard/deepspeech`).  
 Start recording and the app will transcribe the spoken text.
+
+## Fine-tuning the Recognition
+
+Based on your use case or the language you are using you might change the values of `BEAM_WIDTH`, `LM_ALPHA` and `LM_BETA` to improve the speech recogintion. 
+
+You can also alter the `NUM_BUFFER_ELEMENTS` to change the size of the audio data buffer that is fed into the model. 

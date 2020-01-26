@@ -19,7 +19,9 @@ class MainActivity : AppCompatActivity() {
     private var model: DeepSpeechModel? = null
     private var streamContext: DeepSpeechStreamingState? = null
 
-    private val BEAM_WIDTH = 50
+    // Change the following parameters regarding 
+    // what works best for your use case or your language.
+    private val BEAM_WIDTH = 500
     private val LM_ALPHA = 0.75f
     private val LM_BETA = 1.85f
 

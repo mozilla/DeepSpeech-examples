@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import org.mozilla.deepspeech.libdeepspeech.DeepSpeechModel
 import org.mozilla.deepspeech.libdeepspeech.DeepSpeechStreamingState
+import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,23 +68,37 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createModel() {
+    private fun createModel(): Boolean {
         val modelsPath = modelsPathInput.text.toString()
-        model = DeepSpeechModel(modelsPath + "/output_graph.tflite", BEAM_WIDTH)
-        model?.enableDecoderWihLM(modelsPath + "/lm.binary", modelsPath + "/trie", LM_ALPHA, LM_BETA)
+        val tflitePath = "$modelsPath/output_graph.tflite"
+        val languageModelPath = "$modelsPath/lm.binary"
+        val triePath = "$modelsPath/trie"
+
+        for (path in listOf(tflitePath, languageModelPath, triePath)) {
+            if (!(File(path).exists())) {
+                status.text = "Model creation failed: $path does not exist."
+                return false
+            }
+        }
+
+        model = DeepSpeechModel(tflitePath, BEAM_WIDTH)
+        model?.enableDecoderWihLM(languageModelPath, triePath, LM_ALPHA, LM_BETA)
+        return true
     }
 
     private fun startListening() {
-        btnStartInference.text = "Stop Recording"
-
         status.text = "Creating model...\n"
 
         if (model == null) {
-            createModel()
+            if (!createModel()) {
+                return
+            }
             status.append("Created model.\n")
         } else {
             status.append("Model already created.\n")
         }
+
+        btnStartInference.text = "Stop Recording"
 
         streamContext = model?.createStream()
 

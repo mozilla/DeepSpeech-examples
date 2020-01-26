@@ -6,8 +6,8 @@ Android demo application that streams audio from the microphone to deepspeech an
 
 - Download the pre-trained English model and extract it:
 ```
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/deepspeech-0.6.0-models.tar.gz
-tar xvf deepspeech-0.6.0-models.tar.gz
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.1/deepspeech-0.6.1-models.tar.gz
+tar xvf deepspeech-0.6.1-models.tar.gz
 ```
 - Connect an android device and move a folder (e.g. named `deepspeech`) containing the model files `output_graph.tflite`, `lm.binary`, `trie` to a location of your choice on the device (for example `/sdcard/`).
 - Clone the repo.

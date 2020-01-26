@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         streamContext = model?.createStream()
 
         recorder = AudioRecord(
-            MediaRecorder.AudioSource.MIC,
+            MediaRecorder.AudioSource.VOICE_RECOGNITION,
             RECORDER_SAMPLERATE,
             RECORDER_CHANNELS,
             RECORDER_AUDIO_ENCODING,

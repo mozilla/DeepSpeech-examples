@@ -15,6 +15,14 @@ wget https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/deepspeech-0
 tar xvfz deepspeech-0.6.0-models.tar.gz
 ```
 
+#### Dependency
+
+Is needed the library **libasound2-dev**
+
+```
+$ sudo apt-get install libasound2-dev
+```
+
 #### Install:
 
 ```

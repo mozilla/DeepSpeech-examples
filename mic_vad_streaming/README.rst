@@ -31,7 +31,6 @@ Usage
    usage: mic_vad_streaming.py [-h] [-v VAD_AGGRESSIVENESS] [--nospinner]
                                [-w SAVEWAV] -m MODEL [-s SCORER]
                                [-nf N_FEATURES] [-nc N_CONTEXT]
-                               [-bw BEAM_WIDTH]
 
    Stream from microphone to DeepSpeech using VAD
 
@@ -55,6 +54,3 @@ Usage
      -nc N_CONTEXT, --n_context N_CONTEXT
                            Size of the context window used for producing
                            timesteps in the input vector. Default: 9
-     -bw BEAM_WIDTH, --beam_width BEAM_WIDTH
-                           Beam width used in the CTC decoder when building
-                           candidate transcriptions. Default: 500

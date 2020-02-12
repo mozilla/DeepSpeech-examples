@@ -61,7 +61,7 @@ audioStream.on('finish', () => {
 	const audioLength = (audioBuffer.length / 2) * (1 / desiredSampleRate);
 	console.log('audio length', audioLength);
 	
-	let result = model.stt(audioBuffer.slice(0, audioBuffer.length / 2));
+	let result = model.stt(audioBuffer);
 	
 	console.log('result:', result);
 });

@@ -29,9 +29,8 @@ Usage
 .. code-block::
 
    usage: mic_vad_streaming.py [-h] [-v VAD_AGGRESSIVENESS] [--nospinner]
-                               [-w SAVEWAV] -m MODEL [-l LM]
-                               [-t TRIE] [-nf N_FEATURES] [-nc N_CONTEXT]
-                               [-la LM_ALPHA] [-lb LM_BETA]
+                               [-w SAVEWAV] -m MODEL [-s SCORER]
+                               [-nf N_FEATURES] [-nc N_CONTEXT]
                                [-bw BEAM_WIDTH]
 
    Stream from microphone to DeepSpeech using VAD
@@ -49,21 +48,13 @@ Usage
                            Path to the model (protocol buffer binary file, or
                            entire directory containing all standard-named files
                            for model)
-     -l LM, --lm LM        Path to the language model binary file. Default:
-                           lm.binary
-     -t TRIE, --trie TRIE  Path to the language model trie file created with
-                           native_client/generate_trie. Default: trie
+     -s SCORER, --scorer SCORER
+                           Path to the external scorer file. Default: kenlm.scorer
      -nf N_FEATURES, --n_features N_FEATURES
                            Number of MFCC features to use. Default: 26
      -nc N_CONTEXT, --n_context N_CONTEXT
                            Size of the context window used for producing
                            timesteps in the input vector. Default: 9
-     -la LM_ALPHA, --lm_alpha LM_ALPHA
-                           The alpha hyperparameter of the CTC decoder. Language
-                           Model weight. Default: 0.75
-     -lb LM_BETA, --lm_beta LM_BETA
-                           The beta hyperparameter of the CTC decoder. Word insertion
-                           bonus. Default: 1.85
      -bw BEAM_WIDTH, --beam_width BEAM_WIDTH
                            Beam width used in the CTC decoder when building
                            candidate transcriptions. Default: 500

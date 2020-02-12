@@ -52,8 +52,8 @@
             Margin="95,69,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Command="{Binding EnableLanguageModelCommand}"
-            Content="Enable LM" />
+            Command="{Binding EnableExternalScorerCommand}"
+            Content="Enable external scorer" />
         <Button
             Width="75"
             Height="25"

@@ -109,7 +109,7 @@ class App(QMainWindow):
         self.microphone = QRadioButton("Microphone")
         self.fileUpload = QRadioButton("File Upload")
         self.browseBox = QLineEdit(self, placeholderText="Wave File, Mono @ 16 kHz, 16bit Little-Endian")
-        self.modelsBox = QLineEdit(self, placeholderText="Directory path for output_graph, lm & trie")
+        self.modelsBox = QLineEdit(self, placeholderText="Directory path for output_graph and scorer")
         self.textboxTranscript = QPlainTextEdit(self, placeholderText="Transcription")
         self.browseButton = QPushButton('Browse', self)
         self.browseButton.setToolTip('Select a wav file')
@@ -238,9 +238,9 @@ class App(QMainWindow):
 
     def modelResult(self, dirName):
         # Fetch and Resolve all the paths of model files
-        output_graph, lm, trie = wavTranscriber.resolve_models(dirName)
-        # Load output_graph, alpahbet, lm and trie
-        self.model = wavTranscriber.load_model(output_graph, lm, trie)
+        output_graph, scorer = wavTranscriber.resolve_models(dirName)
+        # Load output_graph, alphabet and scorer
+        self.model = wavTranscriber.load_model(output_graph, scorer)
 
     def modelFinish(self):
         # self.timer.stop()
@@ -316,9 +316,9 @@ class App(QMainWindow):
         logging.debug("Recording from your microphone")
         while (not self.openMicrophone.isChecked()):
             data = context[1].stdout.read(512)
-            context[2].feedAudioContent(context[0], np.frombuffer(data, np.int16))
+            context[0].feedAudioContent(np.frombuffer(data, np.int16))
         else:
-            transcript = context[2].finishStream(context[0])
+            transcript = context[0].finishStream()
             context[1].terminate()
             context[1].wait()
             self.show()
@@ -367,7 +367,7 @@ class App(QMainWindow):
 
         # Format pretty, extract filename from the full file path
         filename, ext = os.path.split(os.path.basename(waveFile))
-        title_names = ['Filename', 'Duration(s)', 'Inference Time(s)', 'Model Load Time(s)', 'LM Load Time(s)']
+        title_names = ['Filename', 'Duration(s)', 'Inference Time(s)', 'Model Load Time(s)', 'Scorer Load Time(s)']
         logging.debug("************************************************************************************************************")
         logging.debug("%-30s %-20s %-20s %-20s %s" % (title_names[0], title_names[1], title_names[2], title_names[3], title_names[4]))
         logging.debug("%-30s %-20.3f %-20.3f %-20.3f %-0.3f" % (filename + ext, audio_length, inference_time, self.model[1], self.model[2]))

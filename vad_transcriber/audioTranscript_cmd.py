@@ -18,7 +18,7 @@ def main(args):
     parser.add_argument('--audio', required=False,
                         help='Path to the audio file to run (WAV format)')
     parser.add_argument('--model', required=True,
-                        help='Path to directory that contains all model files (output_graph, lm and trie)')
+                        help='Path to directory that contains all model files (output_graph and scorer)')
     parser.add_argument('--stream', required=False, action='store_true',
                         help='To use deepspeech streaming interface')
     args = parser.parse_args()
@@ -34,13 +34,13 @@ def main(args):
     dirName = os.path.expanduser(args.model)
 
     # Resolve all the paths of model files
-    output_graph, lm, trie = wavTranscriber.resolve_models(dirName)
+    output_graph, scorer = wavTranscriber.resolve_models(dirName)
 
-    # Load output_graph, alpahbet, lm and trie
-    model_retval = wavTranscriber.load_model(output_graph, lm, trie)
+    # Load output_graph, alpahbet and scorer
+    model_retval = wavTranscriber.load_model(output_graph, scorer)
 
     if args.audio is not None:
-        title_names = ['Filename', 'Duration(s)', 'Inference Time(s)', 'Model Load Time(s)', 'LM Load Time(s)']
+        title_names = ['Filename', 'Duration(s)', 'Inference Time(s)', 'Model Load Time(s)', 'Scorer Load Time(s)']
         print("\n%-30s %-20s %-20s %-20s %s" % (title_names[0], title_names[1], title_names[2], title_names[3], title_names[4]))
 
         inference_time = 0.0
@@ -81,9 +81,9 @@ def main(args):
         try:
             while True:
                 data = subproc.stdout.read(512)
-                model_retval[0].feedAudioContent(sctx, np.frombuffer(data, np.int16))
+                sctx.feedAudioContent(np.frombuffer(data, np.int16))
         except KeyboardInterrupt:
-            print('Transcription: ', model_retval[0].finishStream(sctx))
+            print('Transcription: ', sctx.finishStream())
             subproc.terminate()
             subproc.wait()
 

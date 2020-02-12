@@ -11,12 +11,6 @@ const { spawn } = require('child_process');
 // Beam width used in the CTC decoder when building candidate transcriptions
 const BEAM_WIDTH = 500;
 
-// The alpha hyperparameter of the CTC decoder. Language Model weight
-const LM_ALPHA = 0.75;
-
-// The beta hyperparameter of the CTC decoder. Word insertion bonus.
-const LM_BETA = 1.85;
-
 let VersionAction = function VersionAction(options) {
 	options = options || {};
 	options.nargs = 0;
@@ -32,8 +26,7 @@ VersionAction.prototype.call = function(parser) {
 
 let parser = new argparse.ArgumentParser({addHelp: true, description: 'Running DeepSpeech inference.'});
 parser.addArgument(['--model'], {required: true, help: 'Path to the model (protocol buffer binary file)'});
-parser.addArgument(['--lm'], {help: 'Path to the language model binary file', nargs: '?'});
-parser.addArgument(['--trie'], {help: 'Path to the language model trie file created with native_client/generate_trie', nargs: '?'});
+parser.addArgument(['--scorer'], {help: 'Path to the scorer file', nargs: '?'});
 parser.addArgument(['--audio'], {required: true, help: 'Path to the audio source to run (ffmpeg supported formats)'});
 parser.addArgument(['--version'], {action: VersionAction, help: 'Print version and exits'});
 let args = parser.parseArgs();
@@ -48,12 +41,12 @@ let model = new Ds.Model(args['model'], BEAM_WIDTH);
 const model_load_end = process.hrtime(model_load_start);
 console.error('Loaded model in %ds.', totalTime(model_load_end));
 
-if (args['lm'] && args['trie']) {
-	console.error('Loading language model from files %s %s', args['lm'], args['trie']);
-	const lm_load_start = process.hrtime();
-	model.enableDecoderWithLM(args['lm'], args['trie'], LM_ALPHA, LM_BETA);
-	const lm_load_end = process.hrtime(lm_load_start);
-	console.error('Loaded language model in %ds.', totalTime(lm_load_end));
+if (args['scorer']) {
+	console.error('Loading scorer from file %s', args['scorer']);
+	const scorer_load_start = process.hrtime();
+	model.enableExternalScorer(args['scorer']);
+	const scorer_load_end = process.hrtime(scorer_load_start);
+	console.error('Loaded scorer in %ds.', totalTime(scorer_load_end));
 }
 
 // Default is 16kHz
@@ -99,7 +92,7 @@ let sctx = model.createStream();
 function finishStream() {
 	const model_load_start = process.hrtime();
 	console.error('Running inference.');
-	console.log('Transcription: ', model.finishStream(sctx));
+	console.log('Transcription: ', sctx.finishStream());
 	const model_load_end = process.hrtime(model_load_start);
 	console.error('Inference took %ds for %ds audio file.', totalTime(model_load_end), audioLength.toPrecision(4));
 	audioLength = 0;
@@ -112,7 +105,7 @@ function intermediateDecode() {
 
 function feedAudioContent(chunk) {
 	audioLength += (chunk.length / 2) * ( 1 / AUDIO_SAMPLE_RATE);
-	model.feedAudioContent(sctx, chunk.slice(0, chunk.length / 2));
+	sctx.feedAudioContent(chunk.slice(0, chunk.length / 2));
 }
 
 function processVad(data) {

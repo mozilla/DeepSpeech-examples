@@ -16,13 +16,11 @@ namespace DeepSpeechWPF
             base.OnStartup(e);
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            const int BEAM_WIDTH = 500;
-
             try
             {
                 //Register instance of DeepSpeech
                 DeepSpeechClient.DeepSpeech deepSpeechClient =
-                    new DeepSpeechClient.DeepSpeech("output_graph.pbmm", BEAM_WIDTH);
+                    new DeepSpeechClient.DeepSpeech("output_graph.pbmm");
 
                 SimpleIoc.Default.Register<IDeepSpeech>(() => deepSpeechClient);
                 SimpleIoc.Default.Register<MainWindowViewModel>();

@@ -14,10 +14,8 @@ Load the pre-trained model into the memory
 Returns a list [DeepSpeech Object, Model Load Time, Scorer Load Time]
 '''
 def load_model(models, scorer):
-    BEAM_WIDTH = 500
-
     model_load_start = timer()
-    ds = Model(models, BEAM_WIDTH)
+    ds = Model(models)
     model_load_end = timer() - model_load_start
     logging.debug("Loaded model in %0.3fs." % (model_load_end))
 

@@ -6,11 +6,6 @@ const argparse = require('argparse');
 const util = require('util');
 const { spawn } = require('child_process');
 
-// These constants control the beam search decoder
-
-// Beam width used in the CTC decoder when building candidate transcriptions
-const BEAM_WIDTH = 500;
-
 let VersionAction = function VersionAction(options) {
 	options = options || {};
 	options.nargs = 0;
@@ -37,7 +32,7 @@ function totalTime(hrtimeValue) {
 
 console.error('Loading model from file %s', args['model']);
 const model_load_start = process.hrtime();
-let model = new Ds.Model(args['model'], BEAM_WIDTH);
+let model = new Ds.Model(args['model']);
 const model_load_end = process.hrtime(model_load_start);
 console.error('Loaded model in %ds.', totalTime(model_load_end));
 
@@ -48,9 +43,6 @@ if (args['scorer']) {
 	const scorer_load_end = process.hrtime(scorer_load_start);
 	console.error('Loaded scorer in %ds.', totalTime(scorer_load_end));
 }
-
-// Default is 16kHz
-const AUDIO_SAMPLE_RATE = 16000;
 
 // Defines different thresholds for voice detection
 // NORMAL: Suitable for high bitrate, low-noise data. May classify noise as voice, too.
@@ -68,7 +60,7 @@ const DEBOUNCE_TIME = 20;
 // Create voice activity stream
 const VAD_STREAM = VAD.createStream({
 	mode: VAD_MODE,
-	audioFrequency: AUDIO_SAMPLE_RATE,
+	audioFrequency: model.sampleRate(),
 	debounceTime: DEBOUNCE_TIME
 });
 
@@ -81,7 +73,7 @@ const ffmpeg = spawn('ffmpeg', [
 	'-vn',
 	'-acodec', 'pcm_s16le',
 	'-ac', 1,
-	'-ar', AUDIO_SAMPLE_RATE,
+	'-ar', model.sampleRate(),
 	'-f', 's16le',
 	'pipe:'
 ]);
@@ -104,7 +96,7 @@ function intermediateDecode() {
 }
 
 function feedAudioContent(chunk) {
-	audioLength += (chunk.length / 2) * ( 1 / AUDIO_SAMPLE_RATE);
+	audioLength += (chunk.length / 2) * ( 1 / model.sampleRate());
 	sctx.feedAudioContent(chunk);
 }
 

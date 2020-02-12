@@ -160,7 +160,7 @@ def main(ARGS):
 
     print('Initializing model...')
     logging.info("ARGS.model: %s", ARGS.model)
-    model = deepspeech.Model(ARGS.model, ARGS.beam_width)
+    model = deepspeech.Model(ARGS.model)
     if ARGS.scorer:
         logging.info("ARGS.scorer: %s", ARGS.scorer)
         model.enableExternalScorer(ARGS.scorer)
@@ -196,7 +196,6 @@ def main(ARGS):
             stream_context = model.createStream()
 
 if __name__ == '__main__':
-    BEAM_WIDTH = 500
     DEFAULT_SAMPLE_RATE = 16000
 
     import argparse
@@ -219,8 +218,6 @@ if __name__ == '__main__':
                         help="Device input index (Int) as listed by pyaudio.PyAudio.get_device_info_by_index(). If not provided, falls back to PyAudio.get_default_device().")
     parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE,
                         help=f"Input device sample rate. Default: {DEFAULT_SAMPLE_RATE}. Your device may require 44100.")
-    parser.add_argument('-bw', '--beam_width', type=int, default=BEAM_WIDTH,
-                        help=f"Beam width used in the CTC decoder when building candidate transcriptions. Default: {BEAM_WIDTH}")
 
     ARGS = parser.parse_args()
     if ARGS.savewav: os.makedirs(ARGS.savewav, exist_ok=True)

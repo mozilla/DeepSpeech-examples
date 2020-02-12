@@ -5,10 +5,9 @@ const MemoryStream = require('memory-stream');
 const Duplex = require('stream').Duplex;
 const Wav = require('node-wav');
 
-const BEAM_WIDTH = 1024;
 let modelPath = './models/output_graph.pbmm';
 
-let model = new DeepSpeech.Model(modelPath, BEAM_WIDTH);
+let model = new DeepSpeech.Model(modelPath);
 
 let desiredSampleRate = model.sampleRate();
 

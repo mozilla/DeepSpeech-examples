@@ -47,7 +47,8 @@ def main(args):
 
         # Run VAD on the input file
         waveFile = args.audio
-        segments, sample_rate, audio_length = wavTranscriber.vad_segment_generator(waveFile, args.aggressive)
+        segments, sample_rate, audio_length = wavTranscriber.vad_segment_generator(waveFile, args.aggressive,
+                                                                                   model_sample_rate=model_retval[3])
         f = open(waveFile.rstrip(".wav") + ".txt", 'w')
         logging.debug("Saving Transcript @: %s" % waveFile.rstrip(".wav") + ".txt")
 

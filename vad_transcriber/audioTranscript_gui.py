@@ -352,7 +352,8 @@ class App(QMainWindow):
         inference_time = 0.0
 
         # Run VAD on the input file
-        segments, sample_rate, audio_length = wavTranscriber.vad_segment_generator(waveFile, 1)
+        segments, sample_rate, audio_length = wavTranscriber.vad_segment_generator(waveFile, 1,
+                                                                                   model_sample_rate=self.model[3])
         f = open(waveFile.rstrip(".wav") + ".txt", 'w')
         logging.debug("Saving Transcript @: %s" % waveFile.rstrip(".wav") + ".txt")
 

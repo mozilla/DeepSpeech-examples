@@ -29,7 +29,10 @@ def load_model(models, lm, trie):
     lm_load_end = timer() - lm_load_start
     logging.debug('Loaded language model in %0.3fs.' % (lm_load_end))
 
-    return [ds, model_load_end, lm_load_end]
+    sample_rate = ds.sampleRate()
+    logging.debug('Loaded model sample rate: %dHz.' % (sample_rate))
+
+    return [ds, model_load_end, lm_load_end, sample_rate]
 
 '''
 Run Inference on input audio file
@@ -85,10 +88,11 @@ Returns tuple of
     audio_length: Duraton of the input audio file
 
 '''
-def vad_segment_generator(wavFile, aggressiveness):
+def vad_segment_generator(wavFile, aggressiveness, model_sample_rate):
     logging.debug("Caught the wav file @: %s" % (wavFile))
     audio, sample_rate, audio_length = wavSplit.read_wave(wavFile)
-    assert sample_rate == 16000, "Only 16000Hz input WAV files are supported for now!"
+    assert sample_rate == model_sample_rate, \
+        "Audio sample rate must match sample rate of used model: {}Hz".format(model_sample_rate)
     vad = webrtcvad.Vad(int(aggressiveness))
     frames = wavSplit.frame_generator(30, audio, sample_rate)
     frames = list(frames)

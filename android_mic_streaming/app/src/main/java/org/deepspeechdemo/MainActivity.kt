@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     // Change the following parameters regarding 
     // what works best for your use case or your language.
     private val BEAM_WIDTH = 500
-    private val LM_ALPHA = 0.75f
-    private val LM_BETA = 1.85f
+    private val LM_ALPHA = 0.931289039105002f
+    private val LM_BETA = 1.1834137581510284f
 
     private val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
     private val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
@@ -35,9 +35,8 @@ class MainActivity : AppCompatActivity() {
     private val NUM_BUFFER_ELEMENTS = 1024
     private val BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
 
-    private val TFLITE_MODEL_FILENAME = "output_graph.tflite"
-    private val LANGUAGE_MODEL_FILENAME = "lm.binary"
-    private val TRIE_FILENAME = "trie"
+    private val TFLITE_MODEL_FILENAME = "deepspeech-0.7.0-models.tflite"
+    private val SCORER_FILENAME = "deepspeech-0.7.0-models.scorer"
 
     private fun checkAudioPermission() {
         // permission is automatically granted on sdk < 23 upon installation
@@ -69,18 +68,19 @@ class MainActivity : AppCompatActivity() {
     private fun createModel(): Boolean {
         val modelsPath = getExternalFilesDir(null).toString()
         val tfliteModelPath = "$modelsPath/$TFLITE_MODEL_FILENAME"
-        val languageModelPath = "$modelsPath/$LANGUAGE_MODEL_FILENAME"
-        val triePath = "$modelsPath/$TRIE_FILENAME"
+        val scorerPath = "$modelsPath/$SCORER_FILENAME"
 
-        for (path in listOf(tfliteModelPath, languageModelPath, triePath)) {
+        for (path in listOf(tfliteModelPath, scorerPath)) {
             if (!(File(path).exists())) {
                 status.text = "Model creation failed: $path does not exist."
                 return false
             }
         }
 
-        model = DeepSpeechModel(tfliteModelPath, BEAM_WIDTH)
-        model?.enableDecoderWihLM(languageModelPath, triePath, LM_ALPHA, LM_BETA)
+        model = DeepSpeechModel(tfliteModelPath)
+        model?.setBeamWidth(BEAM_WIDTH)
+        model?.enableExternalScorer(scorerPath)
+        model?.setScorerAlphaBeta(LM_ALPHA, LM_BETA)
         return true
     }
 

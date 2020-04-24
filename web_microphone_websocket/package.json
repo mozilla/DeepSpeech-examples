@@ -8,7 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
-    "deepspeech": "^0.6.0",
+    "deepspeech": "^0.7.0",
     "defaults": "^1.0.3",
     "mocha": "^6.1.4",
     "node-vad": "^1.1.4",

@@ -8,11 +8,11 @@ DeepSpeech with voice activity detection.
 1) The example utilized the [mic](https://github.com/ashishbajaj99/mic) NPM module which requires
 either [sox](http://sox.sourceforge.net/) (Windows/Mac) or [arecord](http://alsa-project.org/) (Linux).
 
-2) Download the pre-trained DeepSpeech english model (1.8GB):
+2) Download the pre-trained DeepSpeech english model (1089MB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.6.0/deepspeech-0.6.0-models.tar.gz
-tar xvfz deepspeech-0.6.0-models.tar.gz
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.scorer
 ```
 
 #### Dependency
@@ -40,5 +40,5 @@ node start.js
 Use the `DEEPSPEECH_MODEL` environment variable to change models.
 
 ```
-DEEPSPEECH_MODEL=~/dev/jaxcore/deepspeech-0.6.0-models/ node start.js
+DEEPSPEECH_MODEL=~/dev/jaxcore/deepspeech-0.7.0-models/ node start.js
 ```

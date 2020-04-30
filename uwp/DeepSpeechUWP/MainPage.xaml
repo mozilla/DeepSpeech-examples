@@ -1,0 +1,51 @@
+﻿<Page
+    x:Class="DeepSpeechUWP.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DeepSpeechUWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="50">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <TextBlock FontSize="30" FontWeight="Bold">DeepSpeech UWP Demo</TextBlock>
+            <TextBlock FontSize="20" Margin="0 4 0 40">powered by Audio Graph API</TextBlock>
+            <TextBlock Margin="0 0 0 10">Select an audio for transcription:</TextBlock>
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" HorizontalAlignment="Stretch" x:Name="selectFileButton" Click="selectFileButton_Click">Select File</Button>
+                <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="selectedFile">No file selected...</TextBlock>
+                <Button Grid.Column="2" HorizontalAlignment="Stretch" x:Name="playAudioFileButton" Click="playAudioFileButton_Click" IsEnabled="False">Play</Button>
+                <Button Grid.Column="3" HorizontalAlignment="Stretch" x:Name="fileTranscribeButton" Click="fileTranscribeButton_Click" IsEnabled="False">Transcribe</Button>
+            </Grid>
+            <Border Height="1" Margin="0 20" Background="#ddd"/>
+            <TextBlock Margin="0 0 0 10">Select an audio input:</TextBlock>
+            <Grid ColumnSpacing="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="100" />
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" HorizontalAlignment="Stretch" x:Name="inputDeviceList" SelectionChanged="inputDeviceList_SelectionChanged" />
+                <Button Grid.Column="1" HorizontalAlignment="Stretch" x:Name="recordButton" Click="recordButton_Click">Record</Button>
+                <Button Grid.Column="2" HorizontalAlignment="Stretch" x:Name="stopRecordButton" IsEnabled="False" Click="stopRecordButton_Click">Stop</Button>
+            </Grid>
+            <Border Height="1" Margin="0 20" Background="#ddd"/>
+            <TextBlock Margin="0 0 0 10" FontWeight="Bold">Results</TextBlock>
+        </StackPanel>
+        <TextBox Grid.Row="1" x:Name="result" TextWrapping="Wrap"  IsReadOnly="True" />
+        <TextBlock Grid.Row="2" x:Name="error" Margin="0 10 0 0" Foreground="Red" />
+    </Grid>
+</Page>

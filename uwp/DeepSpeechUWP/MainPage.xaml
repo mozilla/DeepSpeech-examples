@@ -28,7 +28,7 @@
                 <Button Grid.Column="0" HorizontalAlignment="Stretch" x:Name="selectFileButton" Click="selectFileButton_Click">Select File</Button>
                 <TextBlock Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" x:Name="selectedFile">No file selected...</TextBlock>
                 <Button Grid.Column="2" HorizontalAlignment="Stretch" x:Name="playAudioFileButton" Click="playAudioFileButton_Click" IsEnabled="False">Play</Button>
-                <Button Grid.Column="3" HorizontalAlignment="Stretch" x:Name="fileTranscribeButton" Click="fileTranscribeButton_Click" IsEnabled="False">Transcribe</Button>
+                <Button Grid.Column="3" HorizontalAlignment="Stretch" x:Name="transcribeAudioFileButton" Click="transcribeAudioFileButton_Click" IsEnabled="False">Transcribe</Button>
             </Grid>
             <Border Height="1" Margin="0 20" Background="#ddd"/>
             <TextBlock Margin="0 0 0 10">Select an audio input:</TextBlock>

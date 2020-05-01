@@ -148,22 +148,6 @@ namespace DeepSpeechUWP
             return deviceOutputNode;
         }
 
-        private short convertFloatToShort(float f)
-        {
-            float k = (float)0.0000305;
-            float y = f - (float)(Math.Floor(f * 128) / (float)128);
-            byte a = (byte)Math.Round(y / k);
-            float x = f - a * k;
-            byte b;
-
-            if (x > 0) b = (byte)(x * 128);
-            else if (x < 0) b = (byte)(256 + x * 128);
-            else b = 0;
-
-            short s = BitConverter.ToInt16(new byte[2] { a, b }, 0);
-            return s;
-        }
-
         unsafe private void ProcessFrameOutput(AudioFrame frame)
         {
             using (AudioBuffer buffer = frame.LockBuffer(AudioBufferAccessMode.Read))
@@ -174,11 +158,12 @@ namespace DeepSpeechUWP
                 if (capacityInBytes > 0)
                 {
                     float* dataInFloats = (float*)dataInBytes;
+
                     short[] shorts = new short[capacityInBytes / 4];
 
                     for (int i = 0; i < capacityInBytes / 4; i++)
                     {
-                        shorts[i] = convertFloatToShort(dataInFloats[i]);
+                        shorts[i] = (short)((65535 * dataInFloats[i] - 1) / 2);
                     }
 
                     bufferQueue.Enqueue(shorts);

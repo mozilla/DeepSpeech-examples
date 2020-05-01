@@ -29,11 +29,11 @@ Usage
 .. code-block::
 
    usage: mic_vad_streaming.py [-h] [-v VAD_AGGRESSIVENESS] [--nospinner]
-                               [-w SAVEWAV] -m MODEL [-s SCORER]
-                               [-nf N_FEATURES] [-nc N_CONTEXT]
-
+                               [-w SAVEWAV] [-f FILE] -m MODEL [-s SCORER]
+                               [-d DEVICE] [-r RATE]
+   
    Stream from microphone to DeepSpeech using VAD
-
+   
    optional arguments:
      -h, --help            show this help message and exit
      -v VAD_AGGRESSIVENESS, --vad_aggressiveness VAD_AGGRESSIVENESS
@@ -43,14 +43,16 @@ Usage
      --nospinner           Disable spinner
      -w SAVEWAV, --savewav SAVEWAV
                            Save .wav files of utterences to given directory
+     -f FILE, --file FILE  Read from .wav file instead of microphone
      -m MODEL, --model MODEL
                            Path to the model (protocol buffer binary file, or
                            entire directory containing all standard-named files
                            for model)
      -s SCORER, --scorer SCORER
-                           Path to the external scorer file. Default: kenlm.scorer
-     -nf N_FEATURES, --n_features N_FEATURES
-                           Number of MFCC features to use. Default: 26
-     -nc N_CONTEXT, --n_context N_CONTEXT
-                           Size of the context window used for producing
-                           timesteps in the input vector. Default: 9
+                           Path to the external scorer file. Default:
+                           kenlm.scorer
+     -d DEVICE, --device DEVICE
+                           Device input index (Int) as listed by
+                           pyaudio.PyAudio.get_device_info_by_index(). If not
+                           provided, falls back to PyAudio.get_default_device().
+     -r RATE, --rate RATE  Input device sample rate. Default: 16000. Your device

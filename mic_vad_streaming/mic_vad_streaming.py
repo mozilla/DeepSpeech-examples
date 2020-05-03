@@ -212,8 +212,8 @@ if __name__ == '__main__':
 
     parser.add_argument('-m', '--model', required=True,
                         help="Path to the model (protocol buffer binary file, or entire directory containing all standard-named files for model)")
-    parser.add_argument('-s', '--scorer', default='kenlm.scorer',
-                        help="Path to the external scorer file. Default: kenlm.scorer")
+    parser.add_argument('-s', '--scorer',
+                        help="Path to the external scorer file.")
     parser.add_argument('-d', '--device', type=int, default=None,
                         help="Device input index (Int) as listed by pyaudio.PyAudio.get_device_info_by_index(). If not provided, falls back to PyAudio.get_default_device().")
     parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE,

@@ -58,10 +58,10 @@ Resolve directory path for the models and fetch each of them.
 Retunns a tuple containing each of the model files (pb, scorer)
 '''
 def resolve_models(dirName):
-    pb = glob.glob(dirName + "/*.pb")[0]
+    pb = glob.glob(dirName + "/*.pbmm")[0]
     logging.debug("Found Model: %s" % pb)
 
-    scorer = glob.glob(dirName + "/kenlm.scorer")[0]
+    scorer = glob.glob(dirName + "/*.scorer")[0]
     logging.debug("Found scorer: %s" % scorer)
 
     return pb, scorer

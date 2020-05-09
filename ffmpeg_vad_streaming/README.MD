@@ -55,4 +55,4 @@ node ./index.js --audio rtmp://<HOST>/<APP>/<KEY> \
 ```
 
 ## Notes
-To get the best result mapped on to your own scenario, it might be helpful to adjust the parameters `VAD_MODE` and `DEBUNCE_TIME`.
+To get the best result mapped on to your own scenario, it might be helpful to adjust the parameters `VAD_MODE` and `DEBOUNCE_TIME`.

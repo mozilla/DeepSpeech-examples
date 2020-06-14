@@ -16,16 +16,16 @@ import delegator
 
 @click.command()
 @click.option("--dirname", type=click.Path(exists=True, resolve_path=True))
-@click.option("--ext")
+@click.option("--ext", default=".mp3")
 @click.option(
     "--model",
     default="deepspeech-0.7.3-models.pbmm",
-    type=click.FileName(exists=True, resolve_path=True),
+    type=click.Path(exists=True, resolve_path=True),
 )
 @click.option(
     "--scorer",
     default="deepspeech-0.7.3-models.scorer",
-    type=click.FileName(exists=True, resolve_path=True),
+    type=click.Path(exists=True, resolve_path=True),
 )
 
 # manage my library of podcasts
@@ -57,7 +57,7 @@ def main(dirname, ext, model, scorer):
             r = delegator.run(convert_command)
             print(r.out)
         else:
-            print("skip")
+            print("skipping wave conversion that exists")
 
         command = " ".join(
             [

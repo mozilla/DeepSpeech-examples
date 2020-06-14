@@ -1,0 +1,1 @@
+deepspeech --model C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.7.3-models.pbmm --scorer C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.7.3-models.scorer --audio C:\Users\jmike\Documents\Audacity\clip.wav --json

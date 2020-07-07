@@ -12,9 +12,9 @@
     "dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron --inspect=5858 .\"",
     "dev-win": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron --inspect=5858 .\"",
     "rebuild": "npm rebuild --runtime=electron --target=9.0.5 --disturl=https://atom.io/download/atom-shell --abi=75",
-    "pack": "yarn run build && electron-builder --dir",
-    "dist": "yarn run build && electron-builder",
-    "dist-win": "yarn run build && electron-builder --x64"
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "dist-win": "npm run build && electron-builder --x64"
   },
   "postinstall": "electron-builder install-app-deps",
   "homepage": "./",

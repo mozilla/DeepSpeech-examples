@@ -21,8 +21,11 @@ tar xfvz audio-0.7.0.tar.gz -C ./public/
 (Optional) Download or softlink DeepSpeech 0.7.4 model files to the root of the project:
 
 ```
+mkdir models
+cd models
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.4/deepspeech-0.7.4-models.pbmm
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.4/deepspeech-0.7.4-models.scorer
+cd ..
 ```
 
 If the files do not exist, they will be downloaded.

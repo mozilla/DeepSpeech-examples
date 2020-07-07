@@ -1,9 +1,8 @@
 *.gz
+/models
 /build
 /dist
 /public/audio
-/public/*.pbmm
-/public/*.scorer
 
 # Logs
 logs

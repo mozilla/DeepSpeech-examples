@@ -14,7 +14,8 @@
     "rebuild": "npm rebuild --runtime=electron --target=9.0.5 --disturl=https://atom.io/download/atom-shell --abi=75",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
-    "dist-win": "npm run build && electron-builder --x64"
+    "dist-win": "npm run build && electron-builder --x64",
+    "dev-test": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && ./node_modules/.bin/electron public/electron.js DEEPSPEECH_TEST\""
   },
   "postinstall": "electron-builder install-app-deps",
   "homepage": "./",

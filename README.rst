@@ -29,6 +29,7 @@ JavaScript:
 * `Node.JS microphone VAD streaming <nodejs_mic_vad_streaming/Readme.md>`_
 * `Node.JS wav <nodejs_wav/Readme.md>`_
 * `Web Microphone Websocket streaming <web_microphone_websocket/Readme.md>`_
+* `Electron wav transcriber <electron/Readme.md>`_
 
 Windows/C#:
 -----------

@@ -1,0 +1,97 @@
+{
+  "name": "deepspeech-electron",
+  "productName": "deepspeech-electron",
+  "version": "1.0.0",
+  "description": "My Electron application description",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "dev": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && electron --inspect=5858 .\"",
+    "dev-win": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron --inspect=5858 .\"",
+    "rebuild": "npm rebuild --runtime=electron --target=9.0.5 --disturl=https://atom.io/download/atom-shell --abi=75",
+    "pack": "yarn run build && electron-builder --dir",
+    "dist": "yarn run build && electron-builder",
+    "dist-win": "yarn run build && electron-builder --x64"
+  },
+  "postinstall": "electron-builder install-app-deps",
+  "homepage": "./",
+  "build": {
+    "appId": "deepspeech-electron",
+    "productName": "deepspeech-electron",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "buildDependenciesFromSource": true,
+    "artifactName": "deepspeech-electron-${version}-${os}-${arch}.${ext}",
+    "dmg": {
+      "title": "${productName}"
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "identity": null
+    },
+    "win": {
+      "target": "nsis",
+      "artifactName": "deepspeech-electron-${version}-${os}-${arch}.${ext}"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "AppImage"
+        }
+      ],
+      "category": "Utility"
+    }
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "deepspeech": "^0.7.4",
+    "electron-is-dev": "^1.1.0",
+    "lodash": "^4.17.15",
+    "node-abi": "^2.18.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-scripts": "^3.4.1",
+    "request": "^2.88.2",
+    "wav": "^1.0.2"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0",
+    "electron": "9.0.5",
+    "electron-builder": "^22.7.0",
+    "electron-rebuild": "^1.11.0",
+    "wait-on": "^3.3.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

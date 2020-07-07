@@ -37,9 +37,23 @@ function createWindow(model) {
 	
 	// message from front-end App.js, request that this file be processed by DeepSpeech
 	ipcMain.handle('recognize-wav', async function (event, file) {
-		let filePath = path.resolve(__dirname, 'audio', file);
-		return recognizeWav(filePath, model);
+		const filePath = path.resolve(__dirname, 'audio', file);
+		const results = await recognizeWav(filePath, model);
+		if (results) checkDone(file, results);
+		return results;
 	});
+	
+	let count = 0;
+	function checkDone(file, results) {
+		if (process.argv.indexOf('DEEPSPEECH_TEST') > -1) {
+			count++
+			console.log('test:', count, file, results);
+			if (count === 3) {
+				console.log('test done');
+				process.exit();
+			}
+		}
+	}
 	
 	// message from front-end App.js, retrieve list of .wav files in /public/audio
 	ipcMain.handle('load-files', function (event) {

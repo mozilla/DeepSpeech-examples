@@ -3,7 +3,7 @@ const socketIO = require('socket.io');
 const DeepSpeech = require('deepspeech');
 const VAD = require('node-vad');
 
-let DEEPSPEECH_MODEL = __dirname + '/deepspeech-0.6.0-models'; // path to deepspeech english model directory
+let DEEPSPEECH_MODEL = __dirname + '/deepspeech-0.7.0-models'; // path to deepspeech english model directory
 
 let SILENCE_THRESHOLD = 200; // how many milliseconds of inactivity before processing the audio
 
@@ -15,20 +15,15 @@ const SERVER_PORT = 4000; // websocket server port
 const VAD_MODE = VAD.Mode.VERY_AGGRESSIVE;
 const vad = new VAD(VAD_MODE);
 
-function createModel(modelDir, options) {
-	let modelPath = modelDir + '/output_graph.pbmm';
-	let lmPath = modelDir + '/lm.binary';
-	let triePath = modelDir + '/trie';
-	let model = new DeepSpeech.Model(modelPath, options.BEAM_WIDTH);
-	model.enableDecoderWithLM(lmPath, triePath, options.LM_ALPHA, options.LM_BETA);
+function createModel(modelDir) {
+	let modelPath = modelDir + '.pbmm';
+	let scorerPath = modelDir + '.scorer';
+	let model = new DeepSpeech.Model(modelPath);
+	model.enableExternalScorer(scorerPath);
 	return model;
 }
 
-let englishModel = createModel(DEEPSPEECH_MODEL, {
-	BEAM_WIDTH: 1024,
-	LM_ALPHA: 0.75,
-	LM_BETA: 1.85
-});
+let englishModel = createModel(DEEPSPEECH_MODEL);
 
 let modelStream;
 let recordedChunks = 0;
@@ -161,12 +156,8 @@ function createStream() {
 function finishStream() {
 	if (modelStream) {
 		let start = new Date();
-		let text = englishModel.finishStream(modelStream);
+		let text = modelStream.finishStream();
 		if (text) {
-			if (text === 'i' || text === 'a') {
-				// bug in DeepSpeech 0.6 causes silence to be inferred as "i" or "a"
-				return;
-			}
 			console.log('');
 			console.log('Recognized Text:', text);
 			let recogTime = new Date().getTime() - start.getTime();
@@ -189,7 +180,7 @@ function intermediateDecode() {
 
 function feedAudioContent(chunk) {
 	recordedAudioLength += (chunk.length / 2) * (1 / 16000) * 1000;
-	englishModel.feedAudioContent(modelStream, chunk.slice(0, chunk.length / 2));
+	modelStream.feedAudioContent(chunk);
 }
 
 const app = http.createServer(function (req, res) {

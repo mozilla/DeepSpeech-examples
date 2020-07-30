@@ -52,6 +52,9 @@
     <Reference Include="CSCore, Version=1.2.1.2, Culture=neutral, PublicKeyToken=5a08f2b6f4415dea, processorArchitecture=MSIL">
       <HintPath>packages\CSCore.1.2.1.2\lib\net35-client\CSCore.dll</HintPath>
     </Reference>
+    <Reference Include="DeepSpeechClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <HintPath>packages\DeepSpeech.0.7.0\lib\net46\DeepSpeechClient.dll</HintPath>
+    </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
       <HintPath>packages\MvvmLightLibs.5.4.1.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
@@ -130,11 +133,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\ds\native_client\dotnet\DeepSpeechClient\DeepSpeechClient.csproj">
-      <Project>{56de4091-bbbe-47e4-852d-7268b33b971f}</Project>
-      <Name>DeepSpeechClient</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\DeepSpeech.0.7.0\build\DeepSpeech.targets" Condition="Exists('packages\DeepSpeech.0.7.0\build\DeepSpeech.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\DeepSpeech.0.7.0\build\DeepSpeech.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\DeepSpeech.0.7.0\build\DeepSpeech.targets'))" />
+  </Target>
 </Project>

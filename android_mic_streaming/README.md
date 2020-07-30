@@ -8,16 +8,15 @@ Android demo application that streams audio from the microphone to deepspeech an
 
 Download the pre-trained English model and extract it:
 ```
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.6.1/deepspeech-0.6.1-models.tar.gz
-tar xvf deepspeech-0.6.1-models.tar.gz
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.tflite
+curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/deepspeech-0.7.0-models.scorer
 ```
 
-Move the model files `output_graph.tflite`, `lm.binary`, `trie` to the demo application's data directory on your android device.  
+Move the model files `deepspeech-0.7.0-models.pbmm`, `deepspeech-0.7.0-models.scorer`, to the demo application's data directory on your android device.
 Mind that the data directory will only be present after installing and launching the app once.
 
 ```
-cd deepspeech-0.6.1-models
-adb push output_graph.tflite lm.binary trie /storage/emulated/0/Android/data/org.deepspeechdemo/files/
+adb push deepspeech-0.7.0-models.tflite deepspeech-0.7.0-models.scorer /storage/emulated/0/Android/data/org.deepspeechdemo/files/
 ```
 
 You can also copy the files from your file browser to the device.

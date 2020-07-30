@@ -10,7 +10,7 @@ if (process.env.DEEPSPEECH_MODEL) {
 	DEEPSPEECH_MODEL = process.env.DEEPSPEECH_MODEL;
 }
 else {
-	DEEPSPEECH_MODEL = __dirname + '/deepspeech-0.7.0-models';
+	DEEPSPEECH_MODEL = __dirname + '/deepspeech-0.8.0-models';
 }
 
 let SILENCE_THRESHOLD = 200; // how many milliseconds of inactivity before processing the audio

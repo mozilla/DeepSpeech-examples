@@ -6,15 +6,15 @@ const download = require('./download');
 
 // return the deepspeech model or download it if it is not found
 function getModel(appDataPath, callback) {
-	let modelPath = path.resolve(appDataPath, 'deepspeech-0.7.4-models.pbmm');
-	let scorerPath = path.resolve(appDataPath, 'deepspeech-0.7.4-models.scorer');
+	let modelPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.pbmm');
+	let scorerPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.scorer');
 	if (fs.existsSync(modelPath) && fs.existsSync(scorerPath)) {
 		callback(createModel(modelPath, scorerPath));
 	}
 	else {
 		// if the model files do not exist, download and save them to AppData path
 		console.log('\nDOWNLOADING MODEL TO: '+appDataPath+'\n');
-		const downloadPath = 'https://github.com/mozilla/DeepSpeech/releases/download/v0.7.4/deepspeech-0.7.4-models';
+		const downloadPath = 'https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models';
 		download(downloadPath+'.pbmm', modelPath, function() {
 			download(downloadPath+'.scorer', scorerPath, function() {
 				callback(createModel(modelPath, scorerPath));

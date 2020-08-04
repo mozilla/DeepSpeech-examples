@@ -46,11 +46,19 @@ function createWindow(model) {
 	let count = 0;
 	function checkDone(file, results) {
 		if (process.argv.indexOf('DEEPSPEECH_TEST') > -1) {
+			// setup a timeout of 10 minutes and return failed test
+			// in case it cannot really do test
+			setTimeout(() => {
+				console.log('test fail');
+				app.quit(1);
+				process.exit(1);
+			}, 10*60*1000);
 			count++
 			console.log('test:', count, file, results);
 			if (count === 3) {
 				console.log('test done');
-				process.exit();
+				app.quit(0);
+				process.exit(0);
 			}
 		}
 	}

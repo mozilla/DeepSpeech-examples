@@ -18,14 +18,14 @@ pushd ${THIS}
   npm install
   npm run rebuild
 
-  ls -halR ${THIS}/node_modules/electron/
-
   if [ -f "${THIS}/node_modules/electron/dist/chrome-sandbox" ]; then
     export ELECTRON_DISABLE_SANDBOX=1
   fi;
 
   ln -s $HOME/DeepSpeech/models models
   ln -s ~/DeepSpeech/audio ./public/
+
+  export CI=true
 
   npm run dev-test
 

@@ -15,7 +15,7 @@
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "dist-win": "npm run build && electron-builder --x64",
-    "dev-test": "concurrently \"BROWSER=none npm start\" \"wait-on http://localhost:3000 && ./node_modules/.bin/electron public/electron.js DEEPSPEECH_TEST\""
+    "dev-test": "concurrently --kill-others --success first \"wait-on http://localhost:3000 && ./node_modules/.bin/electron public/electron.js DEEPSPEECH_TEST\" \"BROWSER=none npm start\""
   },
   "postinstall": "electron-builder install-app-deps",
   "homepage": "./",

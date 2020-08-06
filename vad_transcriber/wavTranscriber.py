@@ -2,7 +2,7 @@ import glob
 import webrtcvad
 import logging
 import wavSplit
-from deepspeech import Model
+import mozilla_voice_stt
 from timeit import default_timer as timer
 
 '''
@@ -15,7 +15,7 @@ Returns a list [DeepSpeech Object, Model Load Time, Scorer Load Time]
 '''
 def load_model(models, scorer):
     model_load_start = timer()
-    ds = Model(models)
+    ds = mozilla_voice_stt.Model(models)
     model_load_end = timer() - model_load_start
     logging.debug("Loaded model in %0.3fs." % (model_load_end))
 

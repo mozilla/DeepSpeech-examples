@@ -1,6 +1,6 @@
 const http = require('http');
 const socketIO = require('socket.io');
-const DeepSpeech = require('deepspeech');
+const STT = require('@mozilla-voice/stt');
 const VAD = require('node-vad');
 
 let DEEPSPEECH_MODEL = __dirname + '/deepspeech-0.8.0-models'; // path to deepspeech english model directory
@@ -18,7 +18,7 @@ const vad = new VAD(VAD_MODE);
 function createModel(modelDir) {
 	let modelPath = modelDir + '.pbmm';
 	let scorerPath = modelDir + '.scorer';
-	let model = new DeepSpeech.Model(modelPath);
+	let model = new STT.Model(modelPath);
 	model.enableExternalScorer(scorerPath);
 	return model;
 }

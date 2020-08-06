@@ -1,4 +1,4 @@
-const DeepSpeech = require('deepspeech');
+const STT = require('@mozilla-voice/stt');
 const VAD = require('node-vad');
 const mic = require('mic');
 const fs = require('fs');
@@ -24,7 +24,7 @@ const vad = new VAD(VAD_MODE);
 function createModel(modelDir) {
 	let modelPath = modelDir + '.pbmm';
 	let scorerPath = modelDir + '.scorer';
-	let model = new DeepSpeech.Model(modelPath);
+	let model = new STT.Model(modelPath);
 	model.enableExternalScorer(scorerPath);
 	return model;
 }

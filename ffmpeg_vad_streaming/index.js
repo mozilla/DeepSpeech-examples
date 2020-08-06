@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const VAD = require("node-vad");
-const Ds = require('deepspeech');
+const STT = require('@mozilla-voice/stt');
 const argparse = require('argparse');
 const util = require('util');
 const { spawn } = require('child_process');
@@ -15,7 +15,7 @@ let VersionAction = function VersionAction(options) {
 util.inherits(VersionAction, argparse.Action);
 
 VersionAction.prototype.call = function(parser) {
-	Ds.printVersions();
+	STT.printVersions();
 	process.exit(0);
 };
 
@@ -32,7 +32,7 @@ function totalTime(hrtimeValue) {
 
 console.error('Loading model from file %s', args['model']);
 const model_load_start = process.hrtime();
-let model = new Ds.Model(args['model']);
+let model = new STT.Model(args['model']);
 const model_load_end = process.hrtime(model_load_start);
 console.error('Loaded model in %ds.', totalTime(model_load_end));
 

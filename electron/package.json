@@ -66,7 +66,6 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "deepspeech": "^0.8.0",
     "electron-is-dev": "^1.1.0",
     "lodash": "^4.17.15",
     "node-abi": "^2.18.0",

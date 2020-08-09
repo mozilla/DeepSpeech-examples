@@ -68,11 +68,20 @@ function createWindow(model) {
 		return new Promise(function (resolve, reject) {
 			try {
 				let audioPath = path.resolve(__dirname, 'audio');
-				fs.readdir(audioPath, function (err, files) {
-					files = files.filter(function (file) {
-						return file.endsWith('.wav');
-					});
-					resolve(files);
+				fs.exists(audioPath, function(exists) {
+					if (exists) {
+						fs.readdir(audioPath, function (err, files) {
+							files = files.filter(function (file) {
+								return file.endsWith('.wav');
+							});
+							resolve(files);
+						});
+					}
+					else {
+						console.log('audio files path does not exist: ', audioPath);
+						console.log('See Readme.md');
+						process.exit();
+					}
 				});
 			} catch (e) {
 				reject(e.toString())

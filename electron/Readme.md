@@ -1,6 +1,6 @@
-# DeepSpeech Electron example
+# Mozilla Voice STT Electron example
 
-This is an example of DeepSpeech running in an Electron app with a ReactJS front-end and processing .wav files.
+This is an example of Mozilla Voice STT running in an Electron app with a ReactJS front-end and processing .wav files.
 
 ## Install
 
@@ -66,6 +66,6 @@ Test the (dmg/appimage/exe) package file that has been generated in `/dist`.
 
 The model files download to the following directories and must be deleted manually
 
-- MacOSX: `~/Library/Application\ Support/deepspeech-electron`
-- Linux:  `~/.config/deepspeech-electron`
-- Windows: `~/AppData/Roaming/deepspeech-electron`
+- MacOSX: `~/Library/Application\ Support/mozilla_voice_stt-electron`
+- Linux:  `~/.config/mozilla_voice_stt-electron`
+- Windows: `~/AppData/Roaming/mozilla_voice_stt-electron`

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const VAD = require("node-vad");
-const Ds = require('deepspeech');
+const mVS = require('@mozilla-voice/stt');
 const argparse = require('argparse');
 const util = require('util');
 const { spawn } = require('child_process');
@@ -15,11 +15,11 @@ let VersionAction = function VersionAction(options) {
 util.inherits(VersionAction, argparse.Action);
 
 VersionAction.prototype.call = function(parser) {
-	Ds.printVersions();
+	mVS.printVersions();
 	process.exit(0);
 };
 
-let parser = new argparse.ArgumentParser({addHelp: true, description: 'Running DeepSpeech inference.'});
+let parser = new argparse.ArgumentParser({addHelp: true, description: 'Running Mozilla Voice STT inference.'});
 parser.addArgument(['--model'], {required: true, help: 'Path to the model (protocol buffer binary file)'});
 parser.addArgument(['--scorer'], {help: 'Path to the scorer file', nargs: '?'});
 parser.addArgument(['--audio'], {required: true, help: 'Path to the audio source to run (ffmpeg supported formats)'});
@@ -32,7 +32,7 @@ function totalTime(hrtimeValue) {
 
 console.error('Loading model from file %s', args['model']);
 const model_load_start = process.hrtime();
-let model = new Ds.Model(args['model']);
+let model = new mVS.Model(args['model']);
 const model_load_end = process.hrtime(model_load_start);
 console.error('Loaded model in %ds.', totalTime(model_load_end));
 

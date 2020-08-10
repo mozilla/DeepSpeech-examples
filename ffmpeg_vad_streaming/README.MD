@@ -1,6 +1,6 @@
 # FFmpeg VAD Streaming
 
-Streaming inference from arbitrary source (FFmpeg input) to DeepSpeech, using VAD (voice activity detection). A fairly simple example demonstrating the DeepSpeech streaming API in Node.js.
+Streaming inference from arbitrary source (FFmpeg input) to Mozilla Voice STT, using VAD (voice activity detection). A fairly simple example demonstrating the Mozilla Voice STT streaming API in Node.js.
 
 This example was successfully tested with a mobile phone streaming a live feed to a RTMP server (nginx-rtmp), which then could be used by this script for near real time speech recognition.
 
@@ -31,7 +31,7 @@ node ./index.js  --audio rtmp://<IP>:1935/live/teststream \
 ```
 
 ## Examples
-Real time streaming inference with DeepSpeech's example audio ([audio-0.4.1.tar.gz](https://github.com/mozilla/DeepSpeech/releases/download/v0.4.1/audio-0.4.1.tar.gz)).
+Real time streaming inference with Mozilla Voice STT's example audio ([audio-0.4.1.tar.gz](https://github.com/mozilla/DeepSpeech/releases/download/v0.4.1/audio-0.4.1.tar.gz)).
 ```bash
 node ./index.js --audio $HOME/audio/2830-3980-0043.wav \
                 --scorer $HOME/models/kenlm.scorer \

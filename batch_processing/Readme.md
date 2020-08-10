@@ -134,7 +134,7 @@ Running via the GPU takes half the time of using the CPU and has good results.
 
 It will then run the individual commands like :
 
-`deepspeech --model C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.pbmm --scorer C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.scorer --audio 'C:\Users\jmike\Downloads\podcast\45374977-48000-2-24d9a365625bb.mp3.wav' --json`
+`mozilla_voice_stt --model C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.pbmm --scorer C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.scorer --audio 'C:\Users\jmike\Downloads\podcast\45374977-48000-2-24d9a365625bb.mp3.wav' --json`
 
 
 Websites referenced:

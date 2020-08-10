@@ -1,15 +1,15 @@
 # MICROPHONE VAD STREAMING
-Minimalistic example to demonstrate the DeepSpeech streaming  API in NIM.Raw audio is streamed from microphone to the DeepSpeech based on VAD (voice Activity Detection).
+Minimalistic example to demonstrate the Mozilla Voice STT streaming  API in NIM.Raw audio is streamed from microphone to the Mozilla Voice STT based on VAD (voice Activity Detection).
 
 ## Prerequisites:
-0) Please read ``PREREQUISITES`` in [README](../README.md)  for getting the required ``libdeepspeech.so`` shared library.
+0) Please read ``PREREQUISITES`` in [README](../README.md)  for getting the required ``libmozilla_voice_stt.so`` shared library.
 1) This example depends on the ``libasound.so``(which is distributed along with all major linux distros and present in linker's default path)
 
 _Note:  You may need to install ``libasound.so``  if not found_
 ```
 sudo apt-get install libasound2
 ```
-2) Download the pre-trained DeepSpeech english model (1089MB) and Scorer Package(~900MB):
+2) Download the pre-trained Mozilla Voice STT english model (1089MB) and Scorer Package(~900MB):
 
 ```
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm

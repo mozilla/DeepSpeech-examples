@@ -61,7 +61,7 @@ def main(dirname, ext, model, scorer):
 
         command = " ".join(
             [
-                "deepspeech",
+                "mozilla_voice_stt",
                 "--model",
                 model,
                 "--scorer",

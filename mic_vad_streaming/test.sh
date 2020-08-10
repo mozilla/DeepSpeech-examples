@@ -8,7 +8,7 @@ pushd ${THIS}
   source ../tests.sh
 
   pip install --user $(get_python_wheel_url "$1")
-  pip install --user -r <(grep -v deepspeech requirements.txt)
+  pip install --user -r <(grep -v mozilla_voice_stt requirements.txt)
 
   pulseaudio &
 

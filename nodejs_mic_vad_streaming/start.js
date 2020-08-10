@@ -1,11 +1,11 @@
-const DeepSpeech = require('deepspeech');
+const mozillaVoiceStt = require('@mozilla-voice/stt');
 const VAD = require('node-vad');
 const mic = require('mic');
 const fs = require('fs');
 const wav = require('wav');
 const Speaker = require('speaker');
 
-let DEEPSPEECH_MODEL; // path to deepspeech model directory
+let DEEPSPEECH_MODEL; // path to model directory
 if (process.env.DEEPSPEECH_MODEL) {
 	DEEPSPEECH_MODEL = process.env.DEEPSPEECH_MODEL;
 }
@@ -24,7 +24,7 @@ const vad = new VAD(VAD_MODE);
 function createModel(modelDir) {
 	let modelPath = modelDir + '.pbmm';
 	let scorerPath = modelDir + '.scorer';
-	let model = new DeepSpeech.Model(modelPath);
+	let model = new mozillaVoiceStt.Model(modelPath);
 	model.enableExternalScorer(scorerPath);
 	return model;
 }

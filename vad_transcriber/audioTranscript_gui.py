@@ -93,7 +93,7 @@ class App(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.title = 'Deepspeech Transcriber'
+        self.title = 'Mozilla Voice STT Transcriber'
         self.left = 10
         self.top = 10
         self.width = 480
@@ -114,7 +114,7 @@ class App(QMainWindow):
         self.browseButton = QPushButton('Browse', self)
         self.browseButton.setToolTip('Select a wav file')
         self.modelsButton = QPushButton('Browse', self)
-        self.modelsButton.setToolTip('Select deepspeech models folder')
+        self.modelsButton.setToolTip('Select models folder')
         self.transcribeWav = QPushButton('Transcribe Wav', self)
         self.transcribeWav.setToolTip('Start Wav Transcription')
         self.openMicrophone = QPushButton('Start Speaking', self)
@@ -205,7 +205,7 @@ class App(QMainWindow):
     @pyqtSlot()
     def models_on_click(self):
         logging.debug('Models Browse Button clicked')
-        self.dirName = QFileDialog.getExistingDirectory(self, "Select deepspeech models directory")
+        self.dirName = QFileDialog.getExistingDirectory(self, "Select models directory")
         if self.dirName:
             self.modelsBox.setText(self.dirName)
             logging.debug(self.dirName)
@@ -309,10 +309,10 @@ class App(QMainWindow):
     @param Context: Is a tuple containing three objects
                     1. Speech samples, sctx
                     2. subprocess handle
-                    3. Deepspeech model object
+                    3. Mozilla Voice STT model object
     '''
     def micWorker(self, context, progress_callback):
-        # Deepspeech Streaming will be run from this method
+        # Mozilla Voice STT Streaming will be run from this method
         logging.debug("Recording from your microphone")
         while (not self.openMicrophone.isChecked()):
             data = context[1].stdout.read(512)
@@ -343,7 +343,7 @@ class App(QMainWindow):
         self.show()
 
     def wavWorker(self, waveFile, progress_callback):
-        # Deepspeech will be run from this method
+        # Mozilla Voice STT will be run from this method
         logging.debug("Preparing for transcription...")
         inference_time = 0.0
 
@@ -353,7 +353,7 @@ class App(QMainWindow):
         logging.debug("Saving Transcript @: %s" % waveFile.rstrip(".wav") + ".txt")
 
         for i, segment in enumerate(segments):
-            # Run deepspeech on the chunk that just completed VAD
+            # Run mozilla voice stt on the chunk that just completed VAD
             logging.debug("Processing chunk %002d" % (i,))
             audio = np.frombuffer(segment, dtype=np.int16)
             output = wavTranscriber.stt(self.model[0], audio, sample_rate)

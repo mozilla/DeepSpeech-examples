@@ -3,8 +3,8 @@ using CSCore;
 using CSCore.CoreAudioAPI;
 using CSCore.SoundIn;
 using CSCore.Streams;
-using DeepSpeechClient.Interfaces;
-using DeepSpeechClient.Models;
+using MozillaVoiceSttClient.Interfaces;
+using MozillaVoiceSttClient.Models;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Win32;
 using System;
@@ -15,7 +15,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace DeepSpeech.WPF.ViewModels
+namespace MozillaVoiceStt.WPF.ViewModels
 {
     /// <summary>
     /// View model of the MainWindow View.
@@ -27,7 +27,7 @@ namespace DeepSpeech.WPF.ViewModels
         private const string ScorerPath = "kenlm.scorer";
         #endregion
 
-        private readonly IDeepSpeech _sttClient;
+        private readonly IMozillaVoiceSttClient _sttClient;
 
         #region Commands
         /// <summary>
@@ -62,7 +62,7 @@ namespace DeepSpeech.WPF.ViewModels
         /// <summary>
         /// Stream used to feed data into the acoustic model.
         /// </summary>
-        private DeepSpeechStream _sttStream;
+        private MozillaVoiceSttStream _sttStream;
 
         /// <summary>
         /// Records the audio of the selected device.
@@ -75,7 +75,7 @@ namespace DeepSpeech.WPF.ViewModels
         private SoundInSource _soundInSource;
 
         /// <summary>
-        /// Target wave source.(16KHz Mono 16bit for DeepSpeech)
+        /// Target wave source.(16KHz Mono 16bit for MozillaVoiceStt)
         /// </summary>
         private IWaveSource _convertedSource;
 
@@ -200,7 +200,7 @@ namespace DeepSpeech.WPF.ViewModels
         #endregion
 
         #region Ctors
-        public MainWindowViewModel(IDeepSpeech sttClient)
+        public MainWindowViewModel(IMozillaVoiceStt sttClient)
         {
             _sttClient = sttClient;
 
@@ -290,7 +290,7 @@ namespace DeepSpeech.WPF.ViewModels
             //read data from the converedSource
             //important: don't use the e.Data here
             //the e.Data contains the raw data provided by the 
-            //soundInSource which won't have the deepspeech required audio format
+            //soundInSource which won't have the model required audio format
             byte[] buffer = new byte[_convertedSource.WaveFormat.BytesPerSecond / 2];
 
             int read;

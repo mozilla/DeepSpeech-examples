@@ -1,10 +1,10 @@
-const DeepSpeech = require('deepspeech');
+const mozillaVoiceStt = require('@mozilla-voice/stt');
 const fs = require('fs');
 const path = require('path');
 const wav = require('wav');
 const download = require('./download');
 
-// return the deepspeech model or download it if it is not found
+// return the model or download it if it is not found
 function getModel(appDataPath, callback) {
 	let modelPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.pbmm');
 	let scorerPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.scorer');
@@ -23,14 +23,14 @@ function getModel(appDataPath, callback) {
 	}
 }
 
-// create the deepspeech model
+// create the model
 function createModel(modelPath, scorerPath) {
-	const model = new DeepSpeech.Model(modelPath);
+	const model = new mozillaVoiceStt.Model(modelPath);
 	model.enableExternalScorer(scorerPath);
 	return model;
 }
 
-// create a deepspeech stream to process a .wav file
+// create a stream to process a .wav file
 function recognizeWav(path, model) {
 	return new Promise(function(resolve, reject) {
 		try {

@@ -1,6 +1,6 @@
 # Android Microphone Streaming
 
-Android demo application that streams audio from the microphone to deepspeech and transcribes it.
+Android demo application that streams audio from the microphone to mozilla voice stt and transcribes it.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ Move the model files `deepspeech-0.8.0-models.pbmm`, `deepspeech-0.8.0-models.sc
 Mind that the data directory will only be present after installing and launching the app once.
 
 ```
-adb push deepspeech-0.8.0-models.tflite deepspeech-0.8.0-models.scorer /storage/emulated/0/Android/data/org.deepspeechdemo/files/
+adb push deepspeech-0.8.0-models.tflite deepspeech-0.8.0-models.scorer /storage/emulated/0/Android/data/org.mozilla.voice.sttdemo/files/
 ```
 
 You can also copy the files from your file browser to the device.

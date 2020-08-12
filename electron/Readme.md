@@ -14,7 +14,7 @@ npm run rebuild
 Download and extract audio files to `/public` directory
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/audio-0.7.0.tar.gz
+wget https://github.com/mozilla/STT/releases/download/v0.7.0/audio-0.7.0.tar.gz
 tar xfvz audio-0.7.0.tar.gz -C ./public/
 ```
 
@@ -23,8 +23,8 @@ tar xfvz audio-0.7.0.tar.gz -C ./public/
 ```
 mkdir models
 cd models
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 cd ..
 ```
 

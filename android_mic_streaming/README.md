@@ -8,8 +8,8 @@ Android demo application that streams audio from the microphone to mozilla voice
 
 Download the pre-trained English model and extract it:
 ```
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.tflite
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+curl -LO https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.tflite
+curl -LO https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
 
 Move the model files `deepspeech-0.8.0-models.pbmm`, `deepspeech-0.8.0-models.scorer`, to the demo application's data directory on your android device.

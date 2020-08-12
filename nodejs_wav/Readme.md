@@ -3,8 +3,8 @@
 Download the pre-trained model (1.8GB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
 
 Edit references to models path if necessary:
@@ -23,7 +23,7 @@ brew install sox
 Download test audio files:
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/audio-0.8.0.tar.gz
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/audio-0.8.0.tar.gz
 tar xfvz audio-0.8.0.tar.gz
 ```
 

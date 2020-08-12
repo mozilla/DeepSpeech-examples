@@ -14,7 +14,7 @@ function getModel(appDataPath, callback) {
 	else {
 		// if the model files do not exist, download and save them to AppData path
 		console.log('\nDOWNLOADING MODEL TO: '+appDataPath+'\n');
-		const downloadPath = 'https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models';
+		const downloadPath = 'https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models';
 		download(downloadPath+'.pbmm', modelPath, function() {
 			download(downloadPath+'.scorer', scorerPath, function() {
 				callback(createModel(modelPath, scorerPath));

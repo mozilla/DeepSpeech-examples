@@ -12,8 +12,8 @@ sudo apt-get install libasound2
 2) Download the pre-trained Mozilla Voice STT english model (1089MB) and Scorer Package(~900MB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
+wget https://github.com/mozilla/STT/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
 
 

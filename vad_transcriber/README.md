@@ -103,5 +103,5 @@ In such a scenario, the GUI tool will not work. The following steps is known to 
 This happens when you don't load the models via the "Browse Models" button, before pressing the "Start recording" button.
 
 #####  What does error XYZ mean?
-You can find a list of error codes and what they mean at https://deepspeech.readthedocs.io/en/latest/Error-Codes.html
+You can find a list of error codes and what they mean at https://mozilla-voice-stt.readthedocs.io/en/latest/Error-Codes.html
 

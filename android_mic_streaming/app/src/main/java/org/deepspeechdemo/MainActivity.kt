@@ -70,6 +70,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             recorder.stop()
+            recorder.release()
         }
     }
 

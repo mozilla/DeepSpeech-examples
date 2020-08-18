@@ -63,6 +63,9 @@ class MainActivity : AppCompatActivity() {
             val decoded = model?.intermediateDecode(streamContext)
             runOnUiThread { transcription.text = decoded }
         }
+        val decoded = model?.finishStream(streamContext)
+        runOnUiThread { transcription.text = decoded }
+        recorder?.stop()
     }
 
     private fun createModel(): Boolean {
@@ -134,11 +137,6 @@ class MainActivity : AppCompatActivity() {
     private fun stopListening() {
         isRecording = false
         btnStartInference.text = "Start Recording"
-
-        val decoded = model?.finishStream(streamContext)
-        transcription.text = decoded
-
-        recorder?.stop()
     }
 
     fun onRecordClick(v: View?) {

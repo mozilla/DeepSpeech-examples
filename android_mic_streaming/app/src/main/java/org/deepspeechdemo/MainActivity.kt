@@ -12,34 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import org.mozilla.deepspeech.libdeepspeech.DeepSpeechModel
-import org.mozilla.deepspeech.libdeepspeech.DeepSpeechStreamingState
 import java.io.File
-
+import java.util.concurrent.atomic.AtomicBoolean
 
 class MainActivity : AppCompatActivity() {
     private var model: DeepSpeechModel? = null
-    private var streamContext: DeepSpeechStreamingState? = null
 
-    // Change the following parameters regarding 
-    // what works best for your use case or your language.
-    private val BEAM_WIDTH = 500L
-    private val LM_ALPHA = 0.931289039105002f
-    private val LM_BETA = 1.1834137581510284f
-
-    private val RECORDER_CHANNELS: Int = AudioFormat.CHANNEL_IN_MONO
-    private val RECORDER_AUDIO_ENCODING: Int = AudioFormat.ENCODING_PCM_16BIT
-    private var recorder: AudioRecord? = null
-    private var recordingThread: Thread? = null
-    private var isRecording: Boolean = false
-
-    private val NUM_BUFFER_ELEMENTS = 1024
-    private val BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
+    private var transcriptionThread: Thread? = null
+    private var isRecording: AtomicBoolean = AtomicBoolean(false)
 
     private val TFLITE_MODEL_FILENAME = "deepspeech-0.8.0-models.tflite"
     private val SCORER_FILENAME = "deepspeech-0.8.0-models.scorer"
 
     private fun checkAudioPermission() {
-        // permission is automatically granted on sdk < 23 upon installation
+        // Permission is automatically granted on SDK < 23 upon installation.
         if (Build.VERSION.SDK_INT >= 23) {
             val permission = Manifest.permission.RECORD_AUDIO
 
@@ -50,21 +36,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun transcribe() {
-        val audioData = ShortArray(NUM_BUFFER_ELEMENTS)
+        // We read from the recorder in chunks of 2048 shorts. With a model that expects its input
+        // at 16000Hz, this corresponds to 2048/16000 = 0.128s or 128ms.
+        val audioBufferSize = 2048
+        val audioData = ShortArray(audioBufferSize)
 
-        while (isRecording) {
-            recorder?.read(
-                    audioData,
-                    0,
-                    NUM_BUFFER_ELEMENTS
+        runOnUiThread { btnStartInference.text = "Stop Recording" }
+
+        model?.let { model ->
+            val streamContext = model.createStream()
+
+            val recorder = AudioRecord(
+                MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                model.sampleRate(),
+                AudioFormat.CHANNEL_IN_MONO,
+                AudioFormat.ENCODING_PCM_16BIT,
+                audioBufferSize
             )
-            model?.feedAudioContent(streamContext, audioData, audioData.size)
-            val decoded = model?.intermediateDecode(streamContext)
-            runOnUiThread { transcription.text = decoded }
+            recorder.startRecording()
+
+            while (isRecording.get()) {
+                recorder.read(audioData, 0, audioBufferSize)
+                model.feedAudioContent(streamContext, audioData, audioData.size)
+                val decoded = model.intermediateDecode(streamContext)
+                runOnUiThread { transcription.text = decoded }
+            }
+
+            val decoded = model.finishStream(streamContext)
+
+            runOnUiThread {
+                btnStartInference.text = "Start Recording"
+                transcription.text = decoded
+            }
+
+            recorder.stop()
         }
-        val decoded = model?.finishStream(streamContext)
-        runOnUiThread { transcription.text = decoded }
-        recorder?.stop()
     }
 
     private fun createModel(): Boolean {
@@ -73,73 +79,49 @@ class MainActivity : AppCompatActivity() {
         val scorerPath = "$modelsPath/$SCORER_FILENAME"
 
         for (path in listOf(tfliteModelPath, scorerPath)) {
-            if (!(File(path).exists())) {
-                status.text = "Model creation failed: $path does not exist."
+            if (!File(path).exists()) {
+                status.append("Model creation failed: $path does not exist.\n")
                 return false
             }
         }
 
         model = DeepSpeechModel(tfliteModelPath)
-        model?.setBeamWidth(BEAM_WIDTH)
         model?.enableExternalScorer(scorerPath)
-        model?.setScorerAlphaBeta(LM_ALPHA, LM_BETA)
+
         return true
     }
 
     private fun startListening() {
-        status.text = "Creating model...\n"
-
-        if (model == null) {
-            if (!createModel()) {
-                return
-            }
-            status.append("Created model.\n")
-        } else {
-            status.append("Model already created.\n")
-        }
-
-        model?.let { model ->
-            btnStartInference.text = "Stop Recording"
-            streamContext = model.createStream()
-
-            if (recorder == null) {
-                recorder = AudioRecord(
-                        MediaRecorder.AudioSource.VOICE_RECOGNITION,
-                        model.sampleRate(),
-                        RECORDER_CHANNELS,
-                        RECORDER_AUDIO_ENCODING,
-                        NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
-            }
-
-            recorder?.startRecording()
-            isRecording = true
-
-            if (recordingThread == null) {
-                recordingThread = Thread(Runnable { transcribe() }, "AudioRecorder Thread")
-                recordingThread?.start()
-            }
+        if (isRecording.compareAndSet(false, true)) {
+            transcriptionThread = Thread(Runnable { transcribe() }, "Transcription Thread")
+            transcriptionThread?.start()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        getExternalFilesDir(null)
         setContentView(R.layout.activity_main)
         checkAudioPermission()
 
-        // create application data directory on the device
-        getExternalFilesDir(null)
+        // Create application data directory on the device
+        val modelsPath = getExternalFilesDir(null).toString()
 
-        status.text = "Ready, waiting ..."
+        status.text = "Ready. Copy model files to \"$modelsPath\" if running for the first time.\n"
     }
 
     private fun stopListening() {
-        isRecording = false
-        btnStartInference.text = "Start Recording"
+        isRecording.set(false)
     }
 
     fun onRecordClick(v: View?) {
-        if (isRecording) {
+        if (model == null) {
+            if (!createModel()) {
+                return
+            }
+            status.append("Created model.\n")
+        }
+
+        if (isRecording.get()) {
             stopListening()
         } else {
             startListening()

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     // Change the following parameters regarding 
     // what works best for your use case or your language.
-    private val BEAM_WIDTH = 500
+    private val BEAM_WIDTH = 500L
     private val LM_ALPHA = 0.931289039105002f
     private val LM_BETA = 1.1834137581510284f
 
@@ -40,8 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkAudioPermission() {
         // permission is automatically granted on sdk < 23 upon installation
-        if (Build.VERSION.SDK_INT >= 23)
-        {
+        if (Build.VERSION.SDK_INT >= 23) {
             val permission = Manifest.permission.RECORD_AUDIO
 
             if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) {
@@ -55,14 +54,17 @@ class MainActivity : AppCompatActivity() {
 
         while (isRecording) {
             recorder?.read(
-                audioData,
-                0,
-                NUM_BUFFER_ELEMENTS
+                    audioData,
+                    0,
+                    NUM_BUFFER_ELEMENTS
             )
             model?.feedAudioContent(streamContext, audioData, audioData.size)
             val decoded = model?.intermediateDecode(streamContext)
             runOnUiThread { transcription.text = decoded }
         }
+        val decoded = model?.finishStream(streamContext)
+        runOnUiThread { transcription.text = decoded }
+        recorder?.stop()
     }
 
     private fun createModel(): Boolean {
@@ -102,11 +104,11 @@ class MainActivity : AppCompatActivity() {
 
             if (recorder == null) {
                 recorder = AudioRecord(
-                    MediaRecorder.AudioSource.VOICE_RECOGNITION,
-                    model.sampleRate(),
-                    RECORDER_CHANNELS,
-                    RECORDER_AUDIO_ENCODING,
-                    NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
+                        MediaRecorder.AudioSource.VOICE_RECOGNITION,
+                        model.sampleRate(),
+                        RECORDER_CHANNELS,
+                        RECORDER_AUDIO_ENCODING,
+                        NUM_BUFFER_ELEMENTS * BYTES_PER_ELEMENT)
             }
 
             recorder?.startRecording()
@@ -134,11 +136,6 @@ class MainActivity : AppCompatActivity() {
     private fun stopListening() {
         isRecording = false
         btnStartInference.text = "Start Recording"
-
-        val decoded = model?.finishStream(streamContext)
-        transcription.text = decoded
-
-        recorder?.stop()
     }
 
     fun onRecordClick(v: View?) {

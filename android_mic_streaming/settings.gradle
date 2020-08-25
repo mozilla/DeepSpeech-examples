@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='MozillaVoiceSttDemo'
+rootProject.name='DeepSpeechDemo'

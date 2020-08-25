@@ -1,6 +1,6 @@
 import os ,deques,math,strutils,parseopt,tables
 import strformat
-import webrtcvad,portaudio,mozilla_voice_stt,wav
+import webrtcvad,portaudio,deepspeech,wav
 
 
 proc sum[T](temp: Deque[T]): int = 
@@ -47,8 +47,8 @@ let
     f1 = open("FIFO_rgb",fmWrite)
     f2 = open("FIFO_rgb",fmREAD)
     stream: pointer = nil #portaudio Stream pointer holder.
-    modelPtr: ModelState = nil  #mozilla Voice Stt model  
-    deepStreamPtr: StreamingState = nil  #mozilla Voice Stt model stream
+    modelPtr: ModelState = nil  #deepSpeech model  
+    deepStreamPtr: StreamingState = nil  #deepSpeech model stream
     modelPath = args["model"]
 if "scorer" in args:
     scorerPath = args["scorer"]
@@ -68,7 +68,7 @@ when isMainModule:
     codeV = setMode(vad,3'i32)
     assert codeV == 0'i32
 
-    #Mozilla Voice STT model initialization.
+    #DeepSpeech model initialization.
     codeD = createModel(modelPath,unsafeaddr(modelPtr))
     if codeD == 0'i32:
         echo("Model Created Successfully")

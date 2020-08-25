@@ -19,5 +19,5 @@ get_python_wheel_url()
 
 get_npm_package_url()
 {
-  echo "https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public/mozilla-voice-stt-${DS_VERSION}.tgz"
+  echo "https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public/mozilla_voice_stt-${DS_VERSION}.tgz"
 }

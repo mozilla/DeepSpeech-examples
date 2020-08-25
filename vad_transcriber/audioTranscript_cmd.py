@@ -20,7 +20,7 @@ def main(args):
     parser.add_argument('--model', required=True,
                         help='Path to directory that contains all model files (output_graph and scorer)')
     parser.add_argument('--stream', required=False, action='store_true',
-                        help='To use mozilla voice stt streaming interface')
+                        help='To use deepspeech streaming interface')
     args = parser.parse_args()
     if args.stream is True:
         print("Opening mic for streaming")
@@ -52,7 +52,7 @@ def main(args):
         logging.debug("Saving Transcript @: %s" % waveFile.rstrip(".wav") + ".txt")
 
         for i, segment in enumerate(segments):
-            # Run mozilla voice stt on the chunk that just completed VAD
+            # Run deepspeech on the chunk that just completed VAD
             logging.debug("Processing chunk %002d" % (i,))
             audio = np.frombuffer(segment, dtype=np.int16)
             output = wavTranscriber.stt(model_retval[0], audio, sample_rate)

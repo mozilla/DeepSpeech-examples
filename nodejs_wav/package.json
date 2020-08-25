@@ -1,5 +1,5 @@
 {
-  "name": "mozilla_voice_stt-nodejs_wav",
+  "name": "deepspeech-nodejs_wav",
   "version": "1.0.0",
   "description": "Simple audio processing",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "argparse": "^1.0.10",
-    "@mozilla-voice/stt": "0.9.0-alpha.5",
+    "deepspeech": "0.8.0",
     "node-wav": "0.0.2",
     "sox-stream": "^2.0.3",
     "util": "^0.11.1"

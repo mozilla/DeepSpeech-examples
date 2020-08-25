@@ -60,7 +60,7 @@ class Audio(object):
         """
         Microphone may not support our native processing sampling rate, so
         resample from input_rate to RATE_PROCESS here for webrtcvad and
-        mozilla_voice_stt
+        deepspeech
 
         Args:
             data (binary): Input audio stream
@@ -152,7 +152,7 @@ class VADAudio(Audio):
                     ring_buffer.clear()
 
 def main(ARGS):
-    # Load model
+    # Load DeepSpeech model
     if os.path.isdir(ARGS.model):
         model_dir = ARGS.model
         ARGS.model = os.path.join(model_dir, 'output_graph.pb')
@@ -173,7 +173,7 @@ def main(ARGS):
     print("Listening (ctrl-C to exit)...")
     frames = vad_audio.vad_collector()
 
-    # Stream from microphone to Mozilla Voice STT using VAD
+    # Stream from microphone to DeepSpeech using VAD
     spinner = None
     if not ARGS.nospinner:
         spinner = Halo(spinner='line')
@@ -199,7 +199,7 @@ if __name__ == '__main__':
     DEFAULT_SAMPLE_RATE = 16000
 
     import argparse
-    parser = argparse.ArgumentParser(description="Stream from microphone to Mozilla Voice STT using VAD")
+    parser = argparse.ArgumentParser(description="Stream from microphone to DeepSpeech using VAD")
 
     parser.add_argument('-v', '--vad_aggressiveness', type=int, default=3,
                         help="Set aggressiveness of VAD: an integer between 0 and 3, 0 being the least aggressive about filtering out non-speech, 3 the most aggressive. Default: 3")

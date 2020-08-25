@@ -1,14 +1,14 @@
 # NodeJS Microphone VAD Streaming
 
 This is a NodeJS example of recording from the microphone and streaming to
-Mozilla Voice STT with voice activity detection.
+DeepSpeech with voice activity detection.
 
 ### Prerequisites:
 
 1) The example utilized the [mic](https://github.com/ashishbajaj99/mic) NPM module which requires
 either [sox](http://sox.sourceforge.net/) (Windows/Mac) or [arecord](http://alsa-project.org/) (Linux).
 
-2) Download the pre-trained Mozilla Voice STT english model (1089MB):
+2) Download the pre-trained DeepSpeech english model (1089MB):
 
 ```
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
@@ -35,7 +35,7 @@ npm install
 node start.js
 ```
 
-#### Specify alternate Mozilla Voice STT model path:
+#### Specify alternate DeepSpeech model path:
 
 Use the `DEEPSPEECH_MODEL` environment variable to change models.
 

@@ -1,4 +1,4 @@
-package org.mozilla.voice.sttdemo
+package org.deepspeechdemo
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -11,14 +11,14 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_main.*
-import org.mozilla.voice.stt.MozillaVoiceSttModel.MozillaVoiceSttModel
-import org.mozilla.voice.stt.MozillaVoiceSttModel.MozillaVoiceSttStreamingState
+import org.mozilla.deepspeech.libdeepspeech.DeepSpeechModel
+import org.mozilla.deepspeech.libdeepspeech.DeepSpeechStreamingState
 import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
-    private var model: MozillaVoiceSttModel? = null
-    private var streamContext: MozillaVoiceSttStreamingState? = null
+    private var model: DeepSpeechModel? = null
+    private var streamContext: DeepSpeechStreamingState? = null
 
     // Change the following parameters regarding 
     // what works best for your use case or your language.
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        model = mozillaVoiceSttModel(tfliteModelPath)
+        model = DeepSpeechModel(tfliteModelPath)
         model?.setBeamWidth(BEAM_WIDTH)
         model?.enableExternalScorer(scorerPath)
         model?.setScorerAlphaBeta(LM_ALPHA, LM_BETA)

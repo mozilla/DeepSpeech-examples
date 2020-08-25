@@ -16,7 +16,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace MozillaVoiceSttUWP
+namespace DeepSpeechUWP
 {
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.

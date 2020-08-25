@@ -1,8 +1,8 @@
 ﻿using CommonServiceLocator;
-using MozillaVoiceStt.WPF.ViewModels;
+using DeepSpeech.WPF.ViewModels;
 using System.Windows;
 
-namespace MozillaVoiceSttWPF
+namespace DeepSpeechWPF
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

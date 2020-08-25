@@ -1,4 +1,4 @@
-# NodeJS voice recognition example using Mozilla Mozilla Voice STT
+# NodeJS voice recognition example using Mozilla DeepSpeech
 
 Download the pre-trained model (1.8GB):
 

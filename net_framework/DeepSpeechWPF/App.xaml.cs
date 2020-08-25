@@ -1,10 +1,10 @@
 ﻿using CommonServiceLocator;
-using MozillaVoiceStt.WPF.ViewModels;
-using MozillaVoiceSttClient.Interfaces;
+using DeepSpeech.WPF.ViewModels;
+using DeepSpeechClient.Interfaces;
 using GalaSoft.MvvmLight.Ioc;
 using System.Windows;
 
-namespace MozillaVoiceSttWPF
+namespace DeepSpeechWPF
 {
     /// <summary>
     /// Interaction logic for App.xaml
@@ -18,11 +18,11 @@ namespace MozillaVoiceSttWPF
 
             try
             {
-                //Register instance of Mozilla Voice STT
-                MozillaVoiceSttClient.MozillaVoiceStt mozillaVoiceSttClient =
-                    new MozillaVoiceSttClient.MozillaVoiceSttModel("deepspeech-0.8.0-models.pbmm");
+                //Register instance of DeepSpeech
+                DeepSpeechClient.DeepSpeech deepSpeechClient =
+                    new DeepSpeechClient.DeepSpeech("deepspeech-0.8.0-models.pbmm");
 
-                SimpleIoc.Default.Register<IMozillaVoiceStt>(() => mozillaVoiceSttClient);
+                SimpleIoc.Default.Register<IDeepSpeech>(() => deepSpeechClient);
                 SimpleIoc.Default.Register<MainWindowViewModel>();
             }
             catch (System.Exception ex)
@@ -35,8 +35,8 @@ namespace MozillaVoiceSttWPF
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            //Dispose instance of MozillaVoiceStt
-            ServiceLocator.Current.GetInstance<IMozillaVoiceStt>()?.Dispose();
+            //Dispose instance of DeepSpeech
+            ServiceLocator.Current.GetInstance<IDeepSpeech>()?.Dispose();
         }
     }
 }

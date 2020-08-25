@@ -1,4 +1,4 @@
-const mozillaVoiceStt = require('@mozilla-voice/stt');
+const DeepSpeech = require('deepspeech');
 const Fs = require('fs');
 const Sox = require('sox-stream');
 const MemoryStream = require('memory-stream');
@@ -7,7 +7,7 @@ const Wav = require('node-wav');
 
 let modelPath = './models/deepspeech-0.8.0-models.pbmm';
 
-let model = new mozillaVoiceStt.Model(modelPath);
+let model = new DeepSpeech.Model(modelPath);
 
 let desiredSampleRate = model.sampleRate();
 

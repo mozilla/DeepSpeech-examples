@@ -1,6 +1,6 @@
 import os ,deques,math,strutils,parseopt,tables,strformat
 import alsa,webrtcvad,wav
-import mozilla_voice_stt
+import deepspeech
 
 var 
     args = initTable[string, string]()
@@ -28,8 +28,8 @@ let
     hw_params: snd_pcm_hw_params_ref = nil
     device_name = "plughw:0,0"  #PCM hardware alsa Device.
     size = (int((frameDuration*int(rate))/1000))
-    modelPtr: ModelState = nil  #mozilla Voice Stt model  
-    deepStreamPtr: StreamingState = nil  #mozilla Voice Stt model stream
+    modelPtr: ModelState = nil  #deepSpeech model  
+    deepStreamPtr: StreamingState = nil  #deepSpeech model stream
     modelPath = args["model"]
     
 var
@@ -40,7 +40,7 @@ var
     framesLen: clong
     vad:vadObj  #VAD Object declaration
     codeV: cint  #to hold the error codes for VAD.
-    codeD: cint #to hold the error codes for mozilla Voice Stt
+    codeD: cint #to hold the error codes for deepSpeech
     #to get the data from the channel.
     frame : seq[int16]
     buff = initDeque[tuple[data: seq[int16],flag:int32]](nextPowerOfTwo(windowSize))

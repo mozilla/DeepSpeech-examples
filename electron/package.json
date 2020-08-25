@@ -1,6 +1,6 @@
 {
-  "name": "mozilla_voice_stt-electron",
-  "productName": "mozilla_voice_stt-electron",
+  "name": "deepspeech-electron",
+  "productName": "deepspeech-electron",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "public/electron.js",
@@ -20,15 +20,15 @@
   "postinstall": "electron-builder install-app-deps",
   "homepage": "./",
   "build": {
-    "appId": "mozilla_voice_stt-electron",
-    "productName": "mozilla_voice_stt-electron",
+    "appId": "deepspeech-electron",
+    "productName": "deepspeech-electron",
     "files": [
       "build/**/*",
       "node_modules/**/*",
       "package.json"
     ],
     "buildDependenciesFromSource": true,
-    "artifactName": "mozilla_voice_stt-electron-${version}-${os}-${arch}.${ext}",
+    "artifactName": "deepspeech-electron-${version}-${os}-${arch}.${ext}",
     "dmg": {
       "title": "${productName}"
     },
@@ -52,7 +52,7 @@
     },
     "win": {
       "target": "nsis",
-      "artifactName": "mozilla_voice_stt-electron-${version}-${os}-${arch}.${ext}"
+      "artifactName": "deepspeech-electron-${version}-${os}-${arch}.${ext}"
     },
     "linux": {
       "target": [
@@ -66,7 +66,7 @@
   "keywords": [],
   "license": "MIT",
   "dependencies": {
-    "@mozilla-voice/stt": "^0.9.0-alpha.5",
+    "deepspeech": "^0.8.0",
     "electron-is-dev": "^1.1.0",
     "lodash": "^4.17.15",
     "node-abi": "^2.18.0",

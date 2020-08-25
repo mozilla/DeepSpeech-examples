@@ -1,7 +1,7 @@
 import time, logging
 from datetime import datetime
 import threading, collections, queue, os, os.path
-import mozilla_voice_stt as stt
+import deepspeech
 import numpy as np
 import pyaudio
 import wave
@@ -160,7 +160,7 @@ def main(ARGS):
 
     print('Initializing model...')
     logging.info("ARGS.model: %s", ARGS.model)
-    model = stt.Model(ARGS.model)
+    model = deepspeech.Model(ARGS.model)
     if ARGS.scorer:
         logging.info("ARGS.scorer: %s", ARGS.scorer)
         model.enableExternalScorer(ARGS.scorer)

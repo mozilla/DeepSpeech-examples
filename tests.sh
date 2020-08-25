@@ -14,10 +14,10 @@ get_python_wheel_url()
 
   extract_python_versions "${this_python_version}" "pyver" "pyver_pkg" "py_unicode_type" "pyconf" "pyalias"
 
-  echo "$(get_python_pkg_url "${pyver_pkg}" "${py_unicode_type}" "mozilla_voice_stt" https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public)"
+  echo "$(get_python_pkg_url "${pyver_pkg}" "${py_unicode_type}" "deepspeech" https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public)"
 }
 
 get_npm_package_url()
 {
-  echo "https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public/mozilla_voice_stt-${DS_VERSION}.tgz"
+  echo "https://community-tc.services.mozilla.com/api/queue/v1/task/${DEP_TASK_ID}/artifacts/public/deepspeech-${DS_VERSION}.tgz"
 }

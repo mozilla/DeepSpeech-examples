@@ -31,7 +31,7 @@ node ./index.js  --audio rtmp://<IP>:1935/live/teststream \
 ```
 
 ## Examples
-Real time streaming inference with Mozilla Voice STT's example audio ([audio-0.4.1.tar.gz](https://github.com/mozilla/STT/releases/download/v0.4.1/audio-0.4.1.tar.gz)).
+Real time streaming inference with Mozilla Voice STT's example audio ([audio-0.4.1.tar.gz](https://github.com/mozilla/DeepSpeech/releases/download/v0.4.1/audio-0.4.1.tar.gz)).
 ```bash
 node ./index.js --audio $HOME/audio/2830-3980-0043.wav \
                 --scorer $HOME/models/kenlm.scorer \

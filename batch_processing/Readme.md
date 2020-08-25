@@ -140,7 +140,7 @@ It will then run the individual commands like :
 Websites referenced:
 
 https://chocolatey.org/packages/cuda
-https://mozilla-voice-stt.readthedocs.io/en/v0.8.1/?badge=latest
+https://deepspeech.readthedocs.io/en/v0.8.0/?badge=latest
 https://developer.nvidia.com/cuda-10.0-download-archive?target_os=Windows&target_arch=x86_64&target_version=10
 https://discourse.mozilla.org/t/query-regarding-speed-of-training-and-issues-with-convergence/41874
 https://discourse.mozilla.org/t/right-cuda-version-for-using-deepspeech-gpu/41927/12

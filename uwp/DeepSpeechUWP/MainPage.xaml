@@ -1,8 +1,8 @@
 ﻿<Page
-    x:Class="MozillaVoiceSttUWP.MainPage"
+    x:Class="DeepSpeechUWP.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:MozillaVoiceSttUWP"
+    xmlns:local="using:DeepSpeechUWP"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -15,7 +15,7 @@
             <RowDefinition Height="40" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
-            <TextBlock FontSize="30" FontWeight="Bold">MozillaVoiceStt UWP Demo</TextBlock>
+            <TextBlock FontSize="30" FontWeight="Bold">DeepSpeech UWP Demo</TextBlock>
             <TextBlock FontSize="20" Margin="0 4 0 40">powered by Audio Graph API</TextBlock>
             <TextBlock Margin="0 0 0 10">Select an audio for transcription:</TextBlock>
             <Grid ColumnSpacing="10">

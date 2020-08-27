@@ -35,7 +35,7 @@ function createWindow(model) {
 		app.quit()
 	});
 	
-	// message from front-end App.js, request that this file be processed by Mozilla Voice STT
+	// message from front-end App.js, request that this file be processed by DeepSpeech
 	ipcMain.handle('recognize-wav', async function (event, file) {
 		const filePath = path.resolve(__dirname, 'audio', file);
 		const results = await recognizeWav(filePath, model);

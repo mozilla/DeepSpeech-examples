@@ -1,19 +1,17 @@
-Mozilla Voice STT master Examples
-=================================
+DeepSpeech master Examples
+==========================
 
-These are various user-contributed examples on how to use or integrate Mozilla Voice STT using our packages.
+These are various examples on how to use or integrate DeepSpeech using our packages.
 
-It is a good way to just try out Mozilla Voice STT before learning how it works in detail, as well as a source of inspiration for ways you can integrate it into your application or solve common tasks like voice activity detection (VAD) or microphone streaming.
+It is a good way to just try out DeepSpeech before learning how it works in detail, as well as a source of inspiration for ways you can integrate it into your application or solve common tasks like voice activity detection (VAD) or microphone streaming.
 
-Please understand that those examples are provided as-is, with no guarantee it will work in every configuration.
+Contributions are welcome!
 
-Contributions like fixes to existing examples or new ones are welcome!
+**Note:** These examples target DeepSpeech **master branch** only. If you're using a different release, you need to go to the corresponding branch for the release:
 
-**Note:** These examples target Mozilla Voice STT **master branch** only. If you're using a different release, you need to go to the corresponding branch for the release:
-
-* `v0.7.x <https://github.com/mozilla/STT-examples/tree/r0.7>`_
-* `v0.6.x <https://github.com/mozilla/STT-examples/tree/r0.6>`_
-* `master branch <https://github.com/mozilla/STT-examples/tree/master>`_
+* `v0.7.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.7>`_
+* `v0.6.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.6>`_
+* `master branch <https://github.com/mozilla/DeepSpeech-examples/tree/master>`_
 
 **List of examples**
 

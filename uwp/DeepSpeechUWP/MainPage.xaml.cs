@@ -1,5 +1,5 @@
-﻿using MozillaVoiceSttClient.Interfaces;
-using MozillaVoiceSttClient.Models;
+﻿using DeepSpeechClient.Interfaces;
+using DeepSpeechClient.Models;
 using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace MozillaVoiceSttUWP
+namespace DeepSpeechUWP
 {
     [ComImport]
     [Guid("5B0D3235-4DBA-4D44-865E-8F1D0E4FD04D")]
@@ -34,8 +34,8 @@ namespace MozillaVoiceSttUWP
         private StorageFile audioFile;
         private DeviceInformation selectedInputDevice;
         private DeviceInformationCollection inputDevices;
-        private IMozillaVoiceSttClient client;
-        private MozillaVoiceSttStream stream;
+        private IDeepSpeech client;
+        private DeepSpeechStream stream;
         private MediaEncodingProfile encoding;
         private AudioGraph graph;
 
@@ -44,7 +44,7 @@ namespace MozillaVoiceSttUWP
         public MainPage()
         {
             this.InitializeComponent();
-            InitMozillaVoiceStt();
+            InitDeepSpeech();
             ListAudioInputDevices();
             InitAudioGraph();
         }
@@ -61,14 +61,14 @@ namespace MozillaVoiceSttUWP
             }
         }
 
-        private void InitMozillaVoiceStt()
+        private void InitDeepSpeech()
         {
             string projectFolder = Directory.GetCurrentDirectory();
             string modelsFolder = Path.Combine(projectFolder, "models");
             string acousticModelPath = Path.Combine(modelsFolder, "deepspeech-0.8.0-models.pbmm");
             string scorerPath = Path.Combine(modelsFolder, "deepspeech-0.8.0-models.scorer");
 
-            client = new MozillaVoiceSttClient.MozillaVoiceSttModel(acousticModelPath);
+            client = new DeepSpeechClient.DeepSpeech(acousticModelPath);
             client.EnableExternalScorer(scorerPath);
         }
 

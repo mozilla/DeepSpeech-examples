@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "argparse": "^1.0.10",
-    "@mozilla-voice/stt": "0.9.0-alpha.5",
+    "deepspeech": "0.8.0",
     "node-vad": "^1.1.1",
     "util": "^0.11.1"
   },

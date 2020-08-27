@@ -8,12 +8,12 @@ const {getModel} = require('./recognize-wav');
 let appDataPath;
 
 if (fs.existsSync(path.resolve(__dirname, '../models/deepspeech-0.8.0-models.pbmm'))) {
-	// if the model was found at the root, use that directory
+	// if the deepspeech model was found at the root, use that directory
 	appDataPath = path.resolve(__dirname, '../models');
 }
 else {
 	// otherwise use the electron "appData" path
-	appDataPath = path.resolve(electron.app.getPath('appData'), 'mozilla_voice_stt-electron');
+	appDataPath = path.resolve(electron.app.getPath('appData'), 'deepspeech-electron');
 }
 
 app.on('ready', function () {

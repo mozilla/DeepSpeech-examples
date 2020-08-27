@@ -2,7 +2,7 @@ import glob
 import webrtcvad
 import logging
 import wavSplit
-import mozilla_voice_stt
+from deepspeech import Model
 from timeit import default_timer as timer
 
 '''
@@ -11,24 +11,24 @@ Load the pre-trained model into the memory
 @param scorer: Scorer file
 
 @Retval
-Returns a list [MozillaVoiceStt Object, Model Load Time, Scorer Load Time]
+Returns a list [DeepSpeech Object, Model Load Time, Scorer Load Time]
 '''
 def load_model(models, scorer):
     model_load_start = timer()
-    mvs = mozilla_voice_stt.Model(models)
+    ds = Model(models)
     model_load_end = timer() - model_load_start
     logging.debug("Loaded model in %0.3fs." % (model_load_end))
 
     scorer_load_start = timer()
-    mvs.enableExternalScorer(scorer)
+    ds.enableExternalScorer(scorer)
     scorer_load_end = timer() - scorer_load_start
     logging.debug('Loaded external scorer in %0.3fs.' % (scorer_load_end))
 
-    return [mvs, model_load_end, scorer_load_end]
+    return [ds, model_load_end, scorer_load_end]
 
 '''
 Run Inference on input audio file
-@param mvs: mozilla voice stt object
+@param ds: Deepspeech object
 @param audio: Input audio for running inference on
 @param fs: Sample rate of the input audio file
 
@@ -36,14 +36,14 @@ Run Inference on input audio file
 Returns a list [Inference, Inference Time, Audio Length]
 
 '''
-def stt(mvs, audio, fs):
+def stt(ds, audio, fs):
     inference_time = 0.0
     audio_length = len(audio) * (1 / fs)
 
-    # Run mozilla voice stt
+    # Run Deepspeech
     logging.debug('Running inference...')
     inference_start = timer()
-    output = mvs.stt(audio)
+    output = ds.stt(audio)
     inference_end = timer() - inference_start
     inference_time += inference_end
     logging.debug('Inference took %0.3fs for %0.3fs audio file.' % (inference_end, audio_length))

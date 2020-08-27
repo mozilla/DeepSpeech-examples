@@ -21,7 +21,7 @@ class App extends Component {
 				files
 			}, () => {
 				files.forEach(file => {
-					// request that each file be processed by mozilla voice stt
+					// request that each file be processed by deepspeech
 					console.log('recognize', file);
 					window.ipcRenderer.invoke('recognize-wav', file).then(result => {
 						// add the recognition results to this.state.results

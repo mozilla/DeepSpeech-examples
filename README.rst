@@ -1,4 +1,4 @@
-DeepSpeech master Examples
+DeepSpeech 0.9.x Examples
 ==========================
 
 These are various examples on how to use or integrate DeepSpeech using our packages.
@@ -7,8 +7,9 @@ It is a good way to just try out DeepSpeech before learning how it works in deta
 
 Contributions are welcome!
 
-**Note:** These examples target DeepSpeech **master branch** only. If you're using a different release, you need to go to the corresponding branch for the release:
+**Note:** These examples target DeepSpeech **0.9.x** only. If you're using a different release, you need to go to the corresponding branch for the release:
 
+* `v0.9.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.9>`_
 * `v0.8.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.8>`_
 * `v0.7.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.7>`_
 * `v0.6.x <https://github.com/mozilla/DeepSpeech-examples/tree/r0.6>`_

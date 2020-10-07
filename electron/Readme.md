@@ -14,8 +14,8 @@ npm run rebuild
 Download and extract audio files to `/public` directory
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.7.0/audio-0.7.0.tar.gz
-tar xfvz audio-0.7.0.tar.gz -C ./public/
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/audio-0.8.0.tar.gz
+tar xfvz audio-0.8.0.tar.gz -C ./public/
 ```
 
 (Optional) Download or softlink DeepSpeech 0.8.0 model files to the root of the project:

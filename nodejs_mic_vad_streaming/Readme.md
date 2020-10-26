@@ -16,7 +16,7 @@ nvm install 14.14
 1. The pre-trained DeepSpeech english model and scorer(1089MB)
 
 ```
-npm install sox
+npm install sox mic
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
@@ -30,6 +30,7 @@ wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0
 
 ```
 sudo apt-get install libasound2-dev alsa-utils
+npm install mic
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```

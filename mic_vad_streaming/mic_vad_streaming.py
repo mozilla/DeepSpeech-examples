@@ -193,6 +193,9 @@ def main(ARGS):
                 wav_data = bytearray()
             text = stream_context.finishStream()
             print("Recognized: %s" % text)
+            if ARGS.keyboard:
+                from pyautogui import typewrite
+                typewrite(text)
             stream_context = model.createStream()
 
 if __name__ == '__main__':
@@ -218,7 +221,8 @@ if __name__ == '__main__':
                         help="Device input index (Int) as listed by pyaudio.PyAudio.get_device_info_by_index(). If not provided, falls back to PyAudio.get_default_device().")
     parser.add_argument('-r', '--rate', type=int, default=DEFAULT_SAMPLE_RATE,
                         help=f"Input device sample rate. Default: {DEFAULT_SAMPLE_RATE}. Your device may require 44100.")
-
+    parser.add_argument('-k', '--keyboard', action='store_true', 
+                        help="Type output through system keyboard")
     ARGS = parser.parse_args()
     if ARGS.savewav: os.makedirs(ARGS.savewav, exist_ok=True)
     main(ARGS)

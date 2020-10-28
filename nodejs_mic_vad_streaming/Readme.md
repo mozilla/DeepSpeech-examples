@@ -5,18 +5,16 @@ DeepSpeech with voice activity detection.
 
 ### Prerequisites:
 
-Node LTS v14.14 installed:
-```bash
-nvm install 14.14
-```
+This has been tested with Node LTS v14.14.
 
 #### Windows/OSX
 
-1. [mic](https://github.com/ashishbajaj99/mic) NPM module - which requires [sox](http://sox.sourceforge.net/)
+1. Sox - Binary available for [download here](https://sourceforge.net/projects/sox/files/sox/)
+1. [mic](https://github.com/ashishbajaj99/mic) NPM module
 1. The pre-trained DeepSpeech english model and scorer(1089MB)
 
 ```
-npm install sox mic
+brew install sox # OSX only
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
@@ -30,14 +28,13 @@ wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0
 
 ```
 sudo apt-get install libasound2-dev alsa-utils
-npm install mic
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
 wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
 ```
 
 ### Install:
 
-Change directory in to the same directory as this Readme then just:
+Change directory to the same directory as this Readme then:
 
 ```
 npm install

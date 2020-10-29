@@ -12,16 +12,20 @@ proxy, etc.
 induced by a polling-based architecture
 
 ## Configuration
+
 Server configuration is specified in the [`application.conf`](application.conf) file. 
 
-## Starting the server
+## Usage
+
+### Starting the server
+
 Make sure your model and scorer files are present in the same directory as the `application.conf` file. Then execute:
 
 ```
 python -m deepspeech_server.app
 ```
 
-## Usage
+### Sending requests to server
 
 The client-server request-response process looks like the following:
 

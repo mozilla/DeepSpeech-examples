@@ -56,3 +56,5 @@ Usage
                            pyaudio.PyAudio.get_device_info_by_index(). If not
                            provided, falls back to PyAudio.get_default_device().
      -r RATE, --rate RATE  Input device sample rate. Default: 16000. Your device
+                           may require 44100.
+     -k, --keyboard        Type output through system keyboards

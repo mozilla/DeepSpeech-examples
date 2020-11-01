@@ -73,8 +73,6 @@ Bug reports and merge requests are welcome.
 
 ### Running tests
 
-Navigate to the [`python_websocket_server`](python_websocket_server) directory. Then, run tests by executing:
-
 ```
 python -m pytest tests/test_app.py
 ```

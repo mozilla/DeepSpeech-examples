@@ -27,7 +27,7 @@ async def healthcheck(_):
     return response.text("Welcome to DeepSpeech Server!")
 
 
-@app.websocket("/api/v1/stt")
+@app.websocket(conf['server.stt_endpoint'])
 async def stt(request, ws):
     logger.debug(f"Received {request.method} request at {request.path}")
     try:

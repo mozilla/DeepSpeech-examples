@@ -70,3 +70,11 @@ DeepSpeech service. The websocket timeout on the ingress is set to 1 hour.
 ## Contributing
 
 Bug reports and merge requests are welcome.
+
+### Running tests
+
+Navigate to the [`python_websocket_server`](python_websocket_server) directory. Then, run tests by executing:
+
+```
+python -m pytest tests/test_app.py
+```

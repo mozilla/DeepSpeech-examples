@@ -21,7 +21,7 @@ Server configuration is specified in the [`application.conf`](application.conf) 
 
 Make sure your model and scorer files are present in the same directory as the `application.conf` file. Then execute:
 
-```
+```sh
 python -m deepspeech_server.app
 ```
 
@@ -70,3 +70,24 @@ DeepSpeech service. The websocket timeout on the ingress is set to 1 hour.
 ## Contributing
 
 Bug reports and merge requests are welcome.
+
+### Running pylint analysis
+
+```sh
+pylint deepspeech_server
+```
+
+### Running tests
+
+To run tests without coverage, execute:
+
+```sh
+python -m pytest tests/test_app.py
+```
+
+To run tests with coverage, and to print coverage to the terminal and write a coverage report, execute:
+
+```sh
+python -m pytest -p pytest_cov --cov=deepspeech_server --cov-report=xml --cov-report=term \
+		  --junitxml=pytest-report.xml tests/test_app.py
+```

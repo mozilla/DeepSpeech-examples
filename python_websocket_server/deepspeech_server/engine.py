@@ -1,3 +1,5 @@
+"""Module containing speech-to-text transcription functionality"""
+
 import wave
 from io import BytesIO
 
@@ -7,6 +9,7 @@ from deepspeech import Model
 
 
 def normalize_audio(audio):
+    """Normalize the audio into the format required by DeepSpeech"""
     out, err = (
         ffmpeg.input("pipe:0")
         .output(
@@ -26,11 +29,13 @@ def normalize_audio(audio):
 
 
 class SpeechToTextEngine:
+    """Class to perform speech-to-text transcription and related functionality"""
     def __init__(self, model_path, scorer_path):
         self.model = Model(model_path=model_path)
         self.model.enableExternalScorer(scorer_path=scorer_path)
 
     def run(self, audio):
+        """Perform speech-to-text transcription"""
         audio = normalize_audio(audio)
         audio = BytesIO(audio)
         with wave.Wave_read(audio) as wav:

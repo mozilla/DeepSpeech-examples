@@ -1,6 +1,6 @@
 apiVersion: v2
 name: deepspeech-server
-description: A server for Mozilla DeepSpeech
+description: A server for DeepSpeech
 
 # A chart can be either an 'application' or a 'library' chart.
 #

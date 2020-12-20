@@ -1,71 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
+    tools:context=".MainActivity"
+    >
+    <data>
+        <variable
+            name="vm"
+            type="org.deepspeechdemo.DSViewModel"
+            />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="100px">
-
+        android:padding="50dp"
+        >
         <TextView
-            android:id="@+id/labelStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Status"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
+            android:text="@string/status"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
         <TextView
-            android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@android:dimen/app_icon_size" />
-
-        <TextView
-            android:id="@+id/labelTranscription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Transcription"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/transcription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Spoken text will appear here."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:text="@string/ready"
+            />
         <Space
             android:layout_width="match_parent"
             android:layout_height="@android:dimen/app_icon_size"
-            android:layout_weight="1" />
-
-        <Button
-            android:id="@+id/btnStartInference"
+            />
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onRecordClick"
-            android:text="Start Recording" />
-
+            android:text="@string/transcription"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{vm.transcription}"
+            tools:text="@string/spoken_text_will_appear_here"
+            />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            />
+        <Button
+            android:id="@+id/record_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=
+                "@{vm.running ? @string/button_stop_recording : @string/button_start_recording }"
+            tools:text="@string/button_start_recording"
+            />
     </LinearLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

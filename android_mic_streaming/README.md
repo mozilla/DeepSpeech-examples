@@ -6,20 +6,13 @@ Android demo application that streams audio from the microphone to deepspeech an
 
 #### Download model
 
-Download the pre-trained English model and extract it:
-```
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.tflite
-curl -LO https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
-```
+[Open the Deepspeech 0.9.3 release page](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3)
+using your device's web browser.
 
-Move the model files `deepspeech-0.8.0-models.pbmm`, `deepspeech-0.8.0-models.scorer`, to the demo application's data directory on your android device.
-Mind that the data directory will only be present after installing and launching the app once.
+Download the pre-trained English model files:
 
-```
-adb push deepspeech-0.8.0-models.tflite deepspeech-0.8.0-models.scorer /storage/emulated/0/Android/data/org.deepspeechdemo/files/
-```
-
-You can also copy the files from your file browser to the device.
+- `deepspeech-0.9.3-models.tflite`
+- `deepspeech-0.9.3-models.scorer`
 
 #### Android device with USB Debugging
 
@@ -43,10 +36,9 @@ Run the app and your connected android device.
 
 ## Usage
 
-Start recording by pressing the button and the app will transcribe the spoken text.
+Launch the app from the home screen.
+It will start recording and transcribing the spoken text automatically.
 
-## Fine-tuning the Recognition
-
-Based on your use case or the language you are using you might change the values of `BEAM_WIDTH`, `LM_ALPHA` and `LM_BETA` to improve the speech recogintion. 
-
-You can also alter the `NUM_BUFFER_ELEMENTS` to change the size of the audio data buffer that is fed into the model. 
+Deepspeech can also be used for daily typing.
+Enable it in Settings > System > Language & input > Virtual keyboard > Manage keyboards,
+and switch to it by long-pressing the spacebar.

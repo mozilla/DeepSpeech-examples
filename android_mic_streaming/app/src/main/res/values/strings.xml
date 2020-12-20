@@ -1,3 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">DeepSpeech Demo</string>
+    <string name="status">Status</string>
+    <string name="transcription">Transcription</string>
+    <string name="spoken_text_will_appear_here">Spoken text will appear here.</string>
+    <string name="button_start_recording">Start Recording</string>
+    <string name="button_stop_recording">Stop Recording</string>
+    <string name="ready">Ready</string>
+    <string name="permissions_request">We need the microphone to recognize speech</string>
+    <string name="ime_name">DeepSpeech Typing</string>
+    <string name="settings">Settings</string>
+    <string name="backspace">Backspace</string>
+    <string name="switch_ime">Switch IME</string>
+    <string name="spacebar">Space</string>
+    <string name="return_enter">Enter</string>
+    <string name="load_title">Load Model</string>
+    <string name="load_description">Whether you\'re changing the language or you\'re just updating Deepspeech, this is the right place</string>
+    <string name="button_next">Next</string>
+    <string name="button_done">Done</string>
+    <string name="file_model">Model (.tflite)</string>
+    <string name="file_scorer">Scorer (.scorer)</string>
+    <string name="file_not_set">Tap to select file</string>
 </resources>

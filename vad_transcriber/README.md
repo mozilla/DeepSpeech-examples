@@ -20,7 +20,7 @@ Ubuntu/Debian
 
 A list of distributions where the package is available can be found at: https://pkgs.org/download/sox
 
-#### 0.1 Download Deepspeech 
+#### 0.1 Download Deepspeech
 Either clone from git via git clone, or Download a version from the release page
 
 For the next steps we assume you have extracted the files to `~/Deepspeech`
@@ -85,9 +85,6 @@ $ python3 audioTranscript_gui.py
 
 ```
 
-![Deepspeech Transcriber](../../doc/audioTranscript.png)
-
-
 #### 2.1. Sporadic failures in pyqt
 Some systems have encountered **_Cannot mix incompatible Qt library with this with this library_** issue.
 In such a scenario, the GUI tool will not work. The following steps is known to have solved the issue in most cases
@@ -103,5 +100,4 @@ In such a scenario, the GUI tool will not work. The following steps is known to 
 This happens when you don't load the models via the "Browse Models" button, before pressing the "Start recording" button.
 
 #####  What does error XYZ mean?
-You can find a list of error codes and what they mean at https://mozilla-voice-stt.readthedocs.io/en/latest/Error-Codes.html
-
+You can find a list of error codes and what they mean at https://deepspeech.readthedocs.io/en/latest/Error-Codes.html

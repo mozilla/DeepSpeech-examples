@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     private val NUM_BUFFER_ELEMENTS = 1024
     private val BYTES_PER_ELEMENT = 2 // 2 bytes (short) because of 16 bit format
 
-    private val TFLITE_MODEL_FILENAME = "deepspeech-0.8.0-models.tflite"
-    private val SCORER_FILENAME = "deepspeech-0.8.0-models.scorer"
+    private val TFLITE_MODEL_FILENAME = "output_graph.tflite"
+    private val SCORER_FILENAME = "pruned_lm.scorer"
 
     private fun checkAudioPermission() {
         // permission is automatically granted on sdk < 23 upon installation

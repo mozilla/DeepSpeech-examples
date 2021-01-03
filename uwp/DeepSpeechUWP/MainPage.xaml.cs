@@ -65,8 +65,8 @@ namespace DeepSpeechUWP
         {
             string projectFolder = Directory.GetCurrentDirectory();
             string modelsFolder = Path.Combine(projectFolder, "models");
-            string acousticModelPath = Path.Combine(modelsFolder, "deepspeech-0.8.0-models.pbmm");
-            string scorerPath = Path.Combine(modelsFolder, "deepspeech-0.8.0-models.scorer");
+            string acousticModelPath = Path.Combine(modelsFolder, "output_graph.pbmm");
+            string scorerPath = Path.Combine(modelsFolder, "pruned_lm.scorer");
 
             client = new DeepSpeechClient.DeepSpeech(acousticModelPath);
             client.EnableExternalScorer(scorerPath);

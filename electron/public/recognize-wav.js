@@ -6,8 +6,8 @@ const download = require('./download');
 
 // return the deepspeech model or download it if it is not found
 function getModel(appDataPath, callback) {
-	let modelPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.pbmm');
-	let scorerPath = path.resolve(appDataPath, 'deepspeech-0.8.0-models.scorer');
+	let modelPath = path.resolve(appDataPath, 'output_graph.pbmm');
+	let scorerPath = path.resolve(appDataPath, 'pruned_lm.scorer');
 	if (fs.existsSync(modelPath) && fs.existsSync(scorerPath)) {
 		callback(createModel(modelPath, scorerPath));
 	}

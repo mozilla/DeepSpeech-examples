@@ -19,12 +19,12 @@ import delegator
 @click.option("--ext", default=".mp3")
 @click.option(
     "--model",
-    default="deepspeech-0.8.0-models.pbmm",
+    default="output_graph.pbmm",
     type=click.Path(exists=True, resolve_path=True),
 )
 @click.option(
     "--scorer",
-    default="deepspeech-0.8.0-models.scorer",
+    default="pruned_lm.scorer",
     type=click.Path(exists=True, resolve_path=True),
 )
 

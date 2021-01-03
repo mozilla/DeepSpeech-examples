@@ -13,7 +13,7 @@ pushd ${THIS}
   pulseaudio &
 
   python mic_vad_streaming.py \
-	  --model $HOME/DeepSpeech/models/deepspeech-0.8.0-models.pbmm \
-	  --scorer $HOME/DeepSpeech/models/deepspeech-0.8.0-models.scorer \
+	  --model $HOME/DeepSpeech/models/output_graph.pbmm \
+	  --scorer $HOME/DeepSpeech/models/pruned_lm.scorer \
 	  --file $HOME/DeepSpeech/audio/2830-3980-0043.wav
 popd

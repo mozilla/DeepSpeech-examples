@@ -3,15 +3,15 @@
 Download the pre-trained model (1.8GB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/output_graph.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/pruned_lm.scorer
 ```
 
 Edit references to models path if necessary:
 
 ```
-let modelPath = './models/deepspeech-0.8.0-models.pbmm';
-let scorerPath = './models/deepspeech-0.8.0-models.scorer';
+let modelPath = './models/output_graph.pbmm';
+let scorerPath = './models/pruned_lm.scorer';
 ```
 
 Install Sox (for .wav file loading):

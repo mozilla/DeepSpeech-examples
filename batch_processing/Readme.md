@@ -128,13 +128,13 @@ Running via the GPU takes half the time of using the CPU and has good results.
 
 # Driver command line
 
-`./driver.py --model c:/Users/jmike/Documents/GitHub/DeepSpeech/deepspeech-0.8.0-models.pbmm  --scorer c:/Users/jmike/Documents/GitHub/DeepSpeech/deepspeech-0.8.0-models.scorer --dirname c:/Users/jmike/Downloads/podcast/`
+`./driver.py --model c:/Users/jmike/Documents/GitHub/DeepSpeech/output_graph.pbmm  --scorer c:/Users/jmike/Documents/GitHub/DeepSpeech/pruned_lm.scorer --dirname c:/Users/jmike/Downloads/podcast/`
 
 # Example
 
 It will then run the individual commands like :
 
-`deepspeech --model C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.pbmm --scorer C:\Users\jmike\Documents\GitHub\DeepSpeech\deepspeech-0.8.0-models.scorer --audio 'C:\Users\jmike\Downloads\podcast\45374977-48000-2-24d9a365625bb.mp3.wav' --json`
+`deepspeech --model C:\Users\jmike\Documents\GitHub\DeepSpeech\output_graph.pbmm --scorer C:\Users\jmike\Documents\GitHub\DeepSpeech\pruned_lm.scorer --audio 'C:\Users\jmike\Downloads\podcast\45374977-48000-2-24d9a365625bb.mp3.wav' --json`
 
 
 Websites referenced:

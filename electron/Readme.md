@@ -23,8 +23,8 @@ tar xfvz audio-0.7.0.tar.gz -C ./public/
 ```
 mkdir models
 cd models
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/output_graph.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/pruned_lm.scorer
 cd ..
 ```
 

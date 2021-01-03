@@ -6,8 +6,8 @@ to a NodeJS server and transmitting the DeepSpeech results back to the browser.
 #### Download the pre-trained model (1.8GB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/output_graph.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/pruned_lm.scorer
 ```
 
 #### Install:

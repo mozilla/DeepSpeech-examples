@@ -5,13 +5,10 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 
-@ObsoleteCoroutinesApi
 class DeepIMEService: InputMethodService() {
     private var view = DeepIMEServiceView(this)
 
-    override fun onCreateInputView(): View {
-        return view.create()
-    }
+    override fun onCreateInputView(): View = view.create()
 
     override fun onStartInputView(attribute: EditorInfo?, restarting: Boolean) {
         super.onStartInput(attribute, restarting)

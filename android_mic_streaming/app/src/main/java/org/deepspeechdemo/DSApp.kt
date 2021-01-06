@@ -11,12 +11,8 @@ class DSApp : Application() {
         modelReloadListeners[context] = func
     }
 
-    internal fun reloadModel() {
-        modelReloadListeners.run {
-            values.forEach {
-                it()
-            }
-            clear()
-        }
+    internal fun reloadModel() = modelReloadListeners.run {
+        values.forEach { it() }
+        clear()
     }
 }

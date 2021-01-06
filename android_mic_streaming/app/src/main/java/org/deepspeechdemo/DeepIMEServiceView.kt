@@ -22,16 +22,12 @@ import androidx.lifecycle.whenResumed
 import kotlinx.coroutines.*
 import org.deepspeechdemo.databinding.KeyboardBinding
 
-@ObsoleteCoroutinesApi
-internal class DeepIMEServiceView(private val service: DeepIMEService):
-    ViewModelStoreOwner, LifecycleOwner, LifecycleEventObserver
-{
-    private val registry = LifecycleRegistry(this).also {
-        it.addObserver(this)
-    }
+internal class DeepIMEServiceView(
+    private val service: DeepIMEService,
+): ViewModelStoreOwner, LifecycleOwner, LifecycleEventObserver {
+    private val registry = LifecycleRegistry(this).also { it.addObserver(this) }
     private var core: DSCore? = null
     private lateinit var vm: DSViewModel
-    private var backspaceJob: Job? = null
     private lateinit var hideRoot: () -> Unit
 
     @SuppressLint("ClickableViewAccessibility") // TODO fix
@@ -45,9 +41,7 @@ internal class DeepIMEServiceView(private val service: DeepIMEService):
             vm = ViewModelProvider(this@DeepIMEServiceView).get<DSViewModel>().apply {
                 fun stopAndHandle(block: () -> Unit) {
                     core!!.stopTranscription()
-                    handler.postDelayed({
-                        block()
-                    }, 0)
+                    handler.postDelayed({ block() }, 0)
                 }
                 val longClickListener = View.OnLongClickListener {
                     stopAndHandle {
@@ -55,82 +49,59 @@ internal class DeepIMEServiceView(private val service: DeepIMEService):
                     }
                     true
                 }
-                settingsButton.setOnClickListener {
-                    reconfigureFiles(service)
-                }
-                recordButton.setOnClickListener {
-                    core!!.startStopTranscription()
-                }
-                backspaceButton.setOnClickListener {
-                    stopAndHandle {
-                        service.currentInputConnection.deleteSurroundingText(1, 0)
-                    }
-                }
+                settingsButton.setOnClickListener { reconfigureFiles(service) }
+                recordButton.setOnClickListener { core!!.startStopTranscription() }
+                backspaceButton.setOnClickListener { stopAndHandle {
+                    service.currentInputConnection.deleteSurroundingText(1, 0)
+                } }
+                var backspaceJob: Job? = null
                 backspaceButton.setOnTouchListener { _, event ->
                     when(event.action) {
-                        MotionEvent.ACTION_DOWN -> viewModelScope.run {
-                            if (backspaceJob == null) {
-                                backspaceJob = launch {
-                                    delay(300)
-                                    while (true) {
-                                        stopAndHandle {
-                                            service.currentInputConnection
-                                                .deleteSurroundingText(1, 0)
-                                        }
-                                        delay(50)
+                        MotionEvent.ACTION_DOWN -> viewModelScope.run { if (backspaceJob == null) {
+                            backspaceJob = launch {
+                                delay(300)
+                                while (true) {
+                                    stopAndHandle {
+                                        service.currentInputConnection
+                                            .deleteSurroundingText(1, 0)
                                     }
+                                    delay(50)
                                 }
                             }
-                        }
-                        MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> {
-                            backspaceJob?.run {
-                                runBlocking {
-                                    cancelAndJoin()
-                                }
-                                backspaceJob = null
-                            }
-                        }
+                        } }
+                        MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> { backspaceJob?.run {
+                            runBlocking { cancelAndJoin() }
+                            backspaceJob = null
+                        } }
                     }
                     false
                 }
                 switchImeButton.run {
-                    setOnClickListener {
-                        service.switchToNextInputMethod(false)
-                    }
+                    setOnClickListener { service.switchToNextInputMethod(false) }
                     setOnLongClickListener(longClickListener)
                 }
                 spacebarButton.run {
-                    setOnClickListener {
-                        stopAndHandle {
-                            service.currentInputConnection.commitText(" ", 1)
-                        }
-                    }
+                    setOnClickListener { stopAndHandle {
+                        service.currentInputConnection.commitText(" ", 1)
+                    } }
                     setOnLongClickListener(longClickListener)
                 }
-                enterButton.setOnClickListener {
-                    stopAndHandle {
-                        service.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER)
-                    }
-                }
+                enterButton.setOnClickListener { stopAndHandle {
+                    service.sendDownUpKeyEvents(KeyEvent.KEYCODE_ENTER)
+                } }
                 transcription.observe(this@DeepIMEServiceView, {
                     // TODO send keystrokes to apps that don't support setComposingText
                     service.currentInputConnection.setComposingText(it, 1)
                 })
-                running.observe(this@DeepIMEServiceView, {
-                    if (!it) {
-                        service.currentInputConnection.finishComposingText()
-                    }
-                })
+                running.observe(this@DeepIMEServiceView, { if (!it) {
+                    service.currentInputConnection.finishComposingText()
+                } })
                 hideRoot = {
                     root.visibility = View.GONE
                     service.requestHideSelf(0)
                 }
                 (service.application as DSApp).addModelReloadListener(service) {
-                    viewModelScope.launch {
-                        whenResumed {
-                            service.restart()
-                        }
-                    }
+                    viewModelScope.launch { whenResumed { service.restart() } }
                 }
                 this@DeepIMEServiceView.vm = this
             }
@@ -140,28 +111,16 @@ internal class DeepIMEServiceView(private val service: DeepIMEService):
         }
     }
 
-    internal fun start() {
-        registry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    }
+    internal fun start() = registry.handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
 
     private fun onStart() {
-        if (!checkAudioPermission(service)) {
-            return
-        }
-        if (core == null) {
-            core = vm.setupCoreOrPrompt(service, {}) {
-                hideRoot()
-            }
-        }
+        if (!ensureMicrophonePermission(service)) return
+        if (core == null) { core = vm.setupCoreOrPrompt(service, {}) { hideRoot() } }
     }
 
-    internal fun stop() {
-        registry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
-    }
+    internal fun stop() = registry.handleLifecycleEvent(Lifecycle.Event.ON_STOP)
 
-    internal fun destroy() {
-        registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    }
+    internal fun destroy() = registry.handleLifecycleEvent(Lifecycle.Event.ON_DESTROY)
 
     override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
         when (event) {
@@ -173,12 +132,8 @@ internal class DeepIMEServiceView(private val service: DeepIMEService):
         }
     }
 
-    override fun getLifecycle(): Lifecycle {
-        return registry
-    }
+    override fun getLifecycle() = registry
 
     private val viewModelStore: ViewModelStore = ViewModelStore()
-    override fun getViewModelStore(): ViewModelStore {
-        return viewModelStore
-    }
+    override fun getViewModelStore() = viewModelStore
 }

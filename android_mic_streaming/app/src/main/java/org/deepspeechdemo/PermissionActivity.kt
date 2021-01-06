@@ -10,17 +10,11 @@ import androidx.core.content.ContextCompat
 
 class PermissionActivity : AppCompatActivity(R.layout.activity_permission) {
     private val requestLauncher = registerForActivityResult(RequestPermission()) {
-        if (it) {
-            finish()
-        } else {
-            request()
-        }
+        if (it) { finish() } else { request() }
     }
 
     private fun request() {
-        Handler(mainLooper).postDelayed({
-            requestLauncher.launch(RECORD_AUDIO)
-        }, 1000)
+        Handler(mainLooper).postDelayed({ requestLauncher.launch(RECORD_AUDIO) }, 1000)
     }
 
     override fun onResume() {
@@ -29,10 +23,7 @@ class PermissionActivity : AppCompatActivity(R.layout.activity_permission) {
     }
 }
 
-internal fun checkAudioPermission(context: Context): Boolean {
-    return (ContextCompat.checkSelfPermission(context, RECORD_AUDIO) == PERMISSION_GRANTED).also {
-        if (!it) {
-            PermissionActivity::class.java.start(context)
-        }
+internal fun ensureMicrophonePermission(context: Context) =
+    (ContextCompat.checkSelfPermission(context, RECORD_AUDIO) == PERMISSION_GRANTED).also {
+        if (!it) { PermissionActivity::class.java.start(context) }
     }
-}

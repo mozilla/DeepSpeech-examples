@@ -25,9 +25,7 @@ internal class ModelData(
 
 internal fun loadModel(context: Context): ModelData? = getDefaultSharedPreferences(context).run {
     fun getFd(key: String, contentResolver: ContentResolver): ParcelFileDescriptor? {
-        return Uri.parse(
-            getString(key, null) ?: return null,
-        ).getFd(contentResolver)
+        return Uri.parse(getString(key, null) ?: return null).getFd(contentResolver)
     }
     context.contentResolver.let {
         val model = getFd(MODEL_URI_PREF_KEY, it) ?: return null
@@ -42,7 +40,5 @@ internal fun loadModel(context: Context): ModelData? = getDefaultSharedPreferenc
 }
 
 internal fun loadModelOrPrompt(context: Context) = loadModel(context).also {
-    if (it == null) {
-        reconfigureFiles(context)
-    }
+    if (it == null) { reconfigureFiles(context) }
 }

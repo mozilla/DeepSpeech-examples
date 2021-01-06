@@ -159,20 +159,20 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DeepSpeech">
-      <Version>0.8.0</Version>
+      <Version>0.9.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.9</Version>
     </PackageReference>
     <Reference Include="DeepSpeechClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
-      <HintPath>..\packages\DeepSpeech.0.8.0\lib\net46\DeepSpeechClient.dll</HintPath>
+      <HintPath>..\packages\DeepSpeech.0.9.3\lib\net46\DeepSpeechClient.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="models\deepspeech-0.8.0-models.pbmm">
+    <Content Include="models\deepspeech-0.9.3-models.pbmm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="models\deepspeech-0.8.0-models.scorer">
+    <Content Include="models\deepspeech-0.9.3-models.scorer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

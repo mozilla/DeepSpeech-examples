@@ -10,7 +10,7 @@ cachetools==4.1.0
 certifi==2020.4.5.2
 chardet==3.0.4
 click==7.1.2
-deepspeech==0.8.0
+deepspeech==0.9.3
 delegator.py @ git+https://github.com/amitt001/delegator.py.git@194aa92543fbdbfbae0bcc24ca217819a7805da2
 flask==1.1.2
 gast==0.2.2

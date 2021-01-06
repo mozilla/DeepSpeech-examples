@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
     private var transcriptionThread: Thread? = null
     private var isRecording: AtomicBoolean = AtomicBoolean(false)
 
-    private val TFLITE_MODEL_FILENAME = "deepspeech-0.8.0-models.tflite"
-    private val SCORER_FILENAME = "deepspeech-0.8.0-models.scorer"
+    private val TFLITE_MODEL_FILENAME = "deepspeech-0.9.3-models.tflite"
+    private val SCORER_FILENAME = "deepspeech-0.9.3-models.scorer"
 
     private fun checkAudioPermission() {
         // Permission is automatically granted on SDK < 23 upon installation.

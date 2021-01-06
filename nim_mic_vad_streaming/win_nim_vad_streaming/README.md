@@ -8,8 +8,8 @@ Minimalistic example to demonstrate the DeepSpeech streaming  API in NIM.Raw aud
 2) Download the pre-trained DeepSpeech english model (1089MB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.scorer
 ```
 
 

@@ -10,7 +10,7 @@ Interface to both the libs is provided through NIM code.
 ## PREREQUISITIES :
 * ```libdeepspeech.so```
 
-Go to the [releases](https://github.com/mozilla/DeepSpeech/releases/tag/v0.8.0) page and download the native client package based on your OS and CPU architecture.
+Go to the [releases](https://github.com/mozilla/DeepSpeech/releases/tag/v0.9.3) page and download the native client package based on your OS and CPU architecture.
 
 Extract the ``libdeepspeech.so`` and put into the subdirectory depending on OS of native Client used.
 

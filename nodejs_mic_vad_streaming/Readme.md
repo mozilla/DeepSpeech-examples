@@ -11,8 +11,8 @@ either [sox](http://sox.sourceforge.net/) (Windows/Mac) or [arecord](http://alsa
 2) Download the pre-trained DeepSpeech english model (1089MB):
 
 ```
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.pbmm
-wget https://github.com/mozilla/DeepSpeech/releases/download/v0.8.0/deepspeech-0.8.0-models.scorer
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.pbmm
+wget https://github.com/mozilla/DeepSpeech/releases/download/v0.9.3/deepspeech-0.9.3-models.scorer
 ```
 
 #### Dependency
@@ -40,5 +40,5 @@ node start.js
 Use the `DEEPSPEECH_MODEL` environment variable to change models.
 
 ```
-DEEPSPEECH_MODEL=~/dev/jaxcore/deepspeech-0.8.0-models/ node start.js
+DEEPSPEECH_MODEL=~/dev/jaxcore/deepspeech-0.9.3-models/ node start.js
 ```

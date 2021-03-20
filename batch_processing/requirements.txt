@@ -21,7 +21,7 @@ grpcio==1.29.0
 h5py==2.10.0
 idna==2.9
 isort==4.3.21
-Jinja2==2.11.2
+Jinja2==2.11.3
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
 Markdown==3.2.2

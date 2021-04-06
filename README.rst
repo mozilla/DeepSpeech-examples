@@ -22,6 +22,7 @@ Python:
 
 * `Microphone VAD streaming <mic_vad_streaming/README.rst>`_
 * `VAD transcriber <vad_transcriber/>`_
+* `AutoSub <autosub/>`_
 
 JavaScript:
 -----------

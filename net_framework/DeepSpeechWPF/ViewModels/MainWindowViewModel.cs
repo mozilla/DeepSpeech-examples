@@ -24,7 +24,7 @@ namespace DeepSpeech.WPF.ViewModels
     {
         #region Constants
         private const int SampleRate = 16000;
-        private const string ScorerPath = "kenlm.scorer";
+        private const string ScorerPath = "deepspeech-0.9.3-models.scorer";
         #endregion
 
         private readonly IDeepSpeech _sttClient;

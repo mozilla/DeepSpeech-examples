@@ -20,10 +20,10 @@ Ubuntu/Debian
 
 A list of distributions where the package is available can be found at: https://pkgs.org/download/sox
 
-#### 0.1 Download Deepspeech 
+#### 0.1 Download Deepspeech-examples
 Either clone from git via git clone, or Download a version from the release page
 
-For the next steps we assume you have extracted the files to `~/Deepspeech`
+For the next steps we assume you have extracted the files to `~/Deepspeech-examples`
 
 
 #### 0.2 Setup your environment
@@ -31,21 +31,21 @@ For the next steps we assume you have extracted the files to `~/Deepspeech`
 Ubuntu/Debian:
 
 ```
-~/Deepspeech$ sudo apt install virtualenv
-~/Deepspeech$ cd examples/vad_transcriber
-~/Deepspeech/examples/vad_transcriber$ virtualenv -p python3 venv
-~/Deepspeech/examples/vad_transcriber$ source venv/bin/activate
-(venv) ~/Deepspeech/examples/vad_transcriber$ pip3 install -r requirements.txt
+~/Deepspeech-examples$ sudo apt install virtualenv
+~/Deepspeech-examples$ cd vad_transcriber
+~/Deepspeech-examples/vad_transcriber$ virtualenv -p python3 venv
+~/Deepspeech-examples/vad_transcriber$ source venv/bin/activate
+(venv) ~/Deepspeech-examples/vad_transcriber$ pip3 install -r requirements.txt
 ```
 
 Fedora
 
 ```
-~/Deepspeech$ sudo dnf install python-virtualenv
-~/Deepspeech$ cd examples/vad_transcriber
-~/Deepspeech/examples/vad_transcriber$ virtualenv -p python3 venv
-~/Deepspeech/examples/vad_transcriber$ source venv/bin/activate
-(venv) ~/Deepspeech/examples/vad_transcriber$ pip3 install -r requirements.txt
+~/Deepspeech-examples$ sudo dnf install python-virtualenv
+~/Deepspeech-examples$ cd vad_transcriber
+~/Deepspeech-examples/vad_transcriber$ virtualenv -p python3 venv
+~/Deepspeech-examples/vad_transcriber$ source venv/bin/activate
+(venv) ~/Deepspeech-examples/vad_transcriber$ pip3 install -r requirements.txt
 ```
 
 Tested on: 29
@@ -60,7 +60,7 @@ Set the aggressiveness mode, to an integer between 0 and 3.
 0 being the least aggressive about filtering out non-speech, 3 is the most aggressive.
 
 ```
-(venv) ~/Deepspeech/examples/vad_transcriber
+(venv) ~/Deepspeech-examples/vad_transcriber
 $ python3 audioTranscript_cmd.py --aggressive 1 --audio ./audio/guido-van-rossum.wav --model ./models/0.4.1/
 
 
@@ -80,22 +80,19 @@ The output is displayed in the transcription window and saved into the directory
 audio file as well.
 
 ```
-(venv) ~/Deepspeech/examples/vad_transcriber
+(venv) ~/Deepspeech-examples/vad_transcriber
 $ python3 audioTranscript_gui.py
 
 ```
-
-![Deepspeech Transcriber](../../doc/audioTranscript.png)
-
 
 #### 2.1. Sporadic failures in pyqt
 Some systems have encountered **_Cannot mix incompatible Qt library with this with this library_** issue.
 In such a scenario, the GUI tool will not work. The following steps is known to have solved the issue in most cases
 ```
-(venv) ~/Deepspeech/examples/vad_transcriber$ pip3 uninstall pyqt5
-(venv) ~/Deepspeech/examples/vad_transcriber$ sudo apt install python3-pyqt5 canberra-gtk-module
-(venv) ~/Deepspeech/examples/vad_transcriber$ export PYTHONPATH=/usr/lib/python3/dist-packages/
-(venv) ~/Deepspeech/examples/vad_transcriber$ python3 audioTranscript_gui.py
+(venv) ~/Deepspeech-examples/vad_transcriber$ pip3 uninstall pyqt5
+(venv) ~/Deepspeech-examples/vad_transcriber$ sudo apt install python3-pyqt5 canberra-gtk-module
+(venv) ~/Deepspeech-examples/vad_transcriber$ export PYTHONPATH=/usr/lib/python3/dist-packages/
+(venv) ~/Deepspeech-examples/vad_transcriber$ python3 audioTranscript_gui.py
 
 ```
 #### 2.2 Useful Tips
@@ -103,5 +100,4 @@ In such a scenario, the GUI tool will not work. The following steps is known to 
 This happens when you don't load the models via the "Browse Models" button, before pressing the "Start recording" button.
 
 #####  What does error XYZ mean?
-You can find a list of error codes and what they mean at https://mozilla-voice-stt.readthedocs.io/en/latest/Error-Codes.html
-
+You can find a list of error codes and what they mean at https://deepspeech.readthedocs.io/en/latest/Error-Codes.html

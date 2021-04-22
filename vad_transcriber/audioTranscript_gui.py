@@ -8,8 +8,15 @@ import wavTranscriber
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
-import shlex
-import subprocess
+ 
+import createFolder
+import subprocess, shlex
+
+import wave
+import audioop
+from scipy.io import wavfile
+
+
 
 # Debug helpers
 logging.basicConfig(stream=sys.stderr,
@@ -96,8 +103,8 @@ class App(QMainWindow):
         self.title = 'Deepspeech Transcriber'
         self.left = 10
         self.top = 10
-        self.width = 480
-        self.height = 400
+        self.width = 560
+        self.height = 500
         self.initUI()
 
     def initUI(self):
@@ -119,7 +126,11 @@ class App(QMainWindow):
         self.transcribeWav.setToolTip('Start Wav Transcription')
         self.openMicrophone = QPushButton('Start Speaking', self)
         self.openMicrophone.setToolTip('Open Microphone')
-
+        
+        #
+        self.CheckConvertSR = QPushButton('Check_Convert_SR', self)
+        self.CheckConvertSR.setToolTip('cHECK AND CONVERT')
+        
         layout.addWidget(self.microphone, 0, 1, 1, 2)
         layout.addWidget(self.fileUpload, 0, 3, 1, 2)
         layout.addWidget(self.browseBox, 1, 0, 1, 4)
@@ -129,6 +140,9 @@ class App(QMainWindow):
         layout.addWidget(self.transcribeWav, 3, 1, 1, 1)
         layout.addWidget(self.openMicrophone, 3, 3, 1, 1)
         layout.addWidget(self.textboxTranscript, 5, 0, -1, 0)
+        
+        #
+        layout.addWidget(self.CheckConvertSR, 3, 4, 1, 1)
 
         w = QWidget()
         w.setLayout(layout)
@@ -149,11 +163,16 @@ class App(QMainWindow):
 
         # Connect Transcription button to threadpool
         self.transcribeWav.clicked.connect(self.transcriptionStart_on_click)
-
+       ##
+        self.CheckConvertSR.clicked.connect(self.CheckConvert_SR_on_click)
+        
         # Connect Microphone button to threadpool
         self.openMicrophone.clicked.connect(self.openMicrophone_on_click)
         self.openMicrophone.setCheckable(True)
         self.openMicrophone.toggle()
+        
+        #
+        #self.Check_SR.clicked.connect(self.Check_SR_on_click)
 
         self.browseButton.setEnabled(False)
         self.browseBox.setEnabled(False)
@@ -161,6 +180,9 @@ class App(QMainWindow):
         self.modelsButton.setEnabled(False)
         self.transcribeWav.setEnabled(False)
         self.openMicrophone.setEnabled(False)
+        
+        #
+        self.CheckConvertSR.setEnabled(False)
 
         self.show()
 
@@ -179,7 +201,8 @@ class App(QMainWindow):
         self.transcribeWav.setEnabled(False)
         self.openMicrophone.setStyleSheet('QPushButton {background-color: #70cc7c; color: black;}')
         self.openMicrophone.setEnabled(True)
-
+        #
+        self.CheckConvertSR.setEnabled(True)
     @pyqtSlot()
     def wav_activate(self):
         logging.debug("Enable wav transcription widgets")
@@ -190,6 +213,8 @@ class App(QMainWindow):
         self.browseBox.setEnabled(True)
         self.modelsBox.setEnabled(True)
         self.modelsButton.setEnabled(True)
+        #
+        self.CheckConvertSR.setEnabled(True)
 
     @pyqtSlot()
     def browse_on_click(self):
@@ -249,7 +274,13 @@ class App(QMainWindow):
             self.openMicrophone.setStyleSheet('QPushButton {background-color: #70cc7c; color: black;}')
             self.openMicrophone.setEnabled(True)
         self.show()
+   
+    # @pyqtSlot()
+    # def check_convert_SR(self):
+    #     logging.debug('Preparing to open microphone...')
+        
 
+     
     @pyqtSlot()
     def transcriptionStart_on_click(self):
         logging.debug('Transcription Start button clicked')
@@ -268,28 +299,114 @@ class App(QMainWindow):
         self.threadpool.start(worker)
 
     @pyqtSlot()
+    def CheckConvert_SR_on_click(self):  
+        logging.debug('check and convert to 16000')
+        
+        print("self wave file",self.fileName)
+        print("\n")
+        
+       # dst = "E:\\STT_DS_Mozilla_Work\\deepspeech\\DeepSpeech-examples-r0.7\\vad_transcriber\\converted_16k\\r1.wav"
+        dst = './Converted_16K_SR_audio/a1.wav'
+        samplerate, data = wavfile.read(self.fileName)
+        
+        print("Current wave file sample rate is :",samplerate)
+        print("\n")
+        #print("  data:" , data)
+        
+        inrate=samplerate
+        outrate=16000 
+        inchannels=1 
+        outchannels=1
+            
+        if not os.path.exists(self.fileName):
+            print('Source not found!')
+            return False
+    
+        if not os.path.exists(os.path.dirname(dst)):
+            os.makedirs(os.path.dirname(dst))
+        
+        try:
+            s_read = wave.open(self.fileName, 'r')
+            s_write = wave.open(dst, 'w')
+            
+            
+        except:
+            print('Failed to open files!')
+            return False
+    
+        n_frames = s_read.getnframes()
+        #print("n_frames",n_frames)
+        #print("\n")
+        data = s_read.readframes(n_frames)
+        #print("data : ",data)
+        
+        #samplerate, data = wavfile.read('/content/output.wav')
+        
+        samplerate, data = wavfile.read(self.fileName)
+        
+       
+        
+        try:
+            converted = audioop.ratecv(data, 2, inchannels, inrate, outrate, None)
+            #print("converted : ",converted)
+            if outchannels == 1 & inchannels != 1:
+                converted[0] = audioop.tomono(converted[0], 2, 1, 0)
+            print("Converted to 16k sample Rate ")
+        except:
+            print('Failed to downsample wav')
+            return False
+    
+        try:
+            s_write.setparams((outchannels, 2, outrate, 0, 'NONE', 'Uncompressed'))
+            s_write.writeframes(converted[0])
+        except:
+            print('Failed to write wav')
+            return False
+    
+        try:
+            s_read.close()
+            s_write.close()
+        except:
+            print('Failed to close wav files')
+            return False
+    
+        #return True
+        
+    @pyqtSlot()
     def openMicrophone_on_click(self):
         logging.debug('Preparing to open microphone...')
 
         # Clear out older data
         self.textboxTranscript.setPlainText("")
         self.show()
+        # import subprocess
+        #subprocess.call('dir', shell=True)
 
         # Threaded signal passing worker functions
         # Prepare env for capturing from microphone and offload work to micWorker worker thread
-        if (not self.openMicrophone.isChecked()):
+        if (self.openMicrophone.isChecked()):
             self.openMicrophone.setStyleSheet('QPushButton {background-color: #C60000; color: black;}')
             self.openMicrophone.setText("Stop")
             logging.debug("Start Recording pressed")
             logging.debug("Preparing for transcription...")
 
             sctx = self.model[0].createStream()
+            
+             
             subproc = subprocess.Popen(shlex.split('rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'),
-                                       stdout=subprocess.PIPE,
-                                       bufsize=0)
+                                        stdout=subprocess.PIPE,
+                                        bufsize=1,shell=True)
+            
+            # google wget...
+            # commandLine = 'wget --post-file output.wavc --header="Content-Type: audio/x-flac; rate=16000" -O - "http://www.google.com/speech-api/v1/recognize?lang=en-us&client=chromium"'
+            # args = shlex.split(commandLine)
+            # proc = subprocess.call(args)
+    
+            
             self.textboxTranscript.insertPlainText('You can start speaking now\n\n')
             self.show()
             logging.debug('You can start speaking now')
+            #context = (sctx, subproc, self.model[0])
             context = (sctx, subproc, self.model[0])
 
             # Pass the state to streaming worker
@@ -302,6 +419,8 @@ class App(QMainWindow):
             self.threadpool.start(worker)
         else:
             logging.debug("Stop Recording")
+            
+    
 
     '''
     Capture the audio stream from the microphone.
@@ -315,6 +434,7 @@ class App(QMainWindow):
         # Deepspeech Streaming will be run from this method
         logging.debug("Recording from your microphone")
         while (not self.openMicrophone.isChecked()):
+            #data = context[1].stdout.read(512)
             data = context[1].stdout.read(512)
             context[0].feedAudioContent(np.frombuffer(data, np.int16))
         else:

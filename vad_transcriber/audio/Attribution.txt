@@ -1,0 +1,7 @@
+All audio from  LibriSpeech[1], a corpus of approximately 1000 hours of 16 kHz
+read English speech, prepared by Vassil Panayotov with the assistance of Daniel
+Povey. The data is derived from read audiobooks from the LibriVox project[2],
+and has been carefully segmented and aligned.
+
+[1] http://www.openslr.org/12
+[2] https://librivox.org/

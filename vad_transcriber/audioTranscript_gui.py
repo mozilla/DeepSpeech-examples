@@ -8,14 +8,19 @@ import wavTranscriber
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+ 
+import subprocess, shlex
+
+import wave
+import audioop
+from scipy.io import wavfile
+
 import shlex
-import subprocess
 
 # Debug helpers
 logging.basicConfig(stream=sys.stderr,
                     level=logging.DEBUG,
                     format='%(filename)s - %(funcName)s@%(lineno)d %(name)s:%(levelname)s  %(message)s')
-
 
 class WorkerSignals(QObject):
     '''
@@ -96,8 +101,8 @@ class App(QMainWindow):
         self.title = 'Deepspeech Transcriber'
         self.left = 10
         self.top = 10
-        self.width = 480
-        self.height = 400
+        self.width = 560
+        self.height = 500
         self.initUI()
 
     def initUI(self):
@@ -119,7 +124,10 @@ class App(QMainWindow):
         self.transcribeWav.setToolTip('Start Wav Transcription')
         self.openMicrophone = QPushButton('Start Speaking', self)
         self.openMicrophone.setToolTip('Open Microphone')
-
+        
+        self.CheckConvertSR = QPushButton('Check_Convert_SR', self)
+        self.CheckConvertSR.setToolTip('convert to 16khz')
+        
         layout.addWidget(self.microphone, 0, 1, 1, 2)
         layout.addWidget(self.fileUpload, 0, 3, 1, 2)
         layout.addWidget(self.browseBox, 1, 0, 1, 4)
@@ -129,6 +137,8 @@ class App(QMainWindow):
         layout.addWidget(self.transcribeWav, 3, 1, 1, 1)
         layout.addWidget(self.openMicrophone, 3, 3, 1, 1)
         layout.addWidget(self.textboxTranscript, 5, 0, -1, 0)
+                
+        layout.addWidget(self.CheckConvertSR, 3, 4, 1, 1)
 
         w = QWidget()
         w.setLayout(layout)
@@ -149,25 +159,29 @@ class App(QMainWindow):
 
         # Connect Transcription button to threadpool
         self.transcribeWav.clicked.connect(self.transcriptionStart_on_click)
-
+        
+        self.CheckConvertSR.clicked.connect(self.CheckConvert_SR_on_click)
+        
         # Connect Microphone button to threadpool
         self.openMicrophone.clicked.connect(self.openMicrophone_on_click)
         self.openMicrophone.setCheckable(True)
         self.openMicrophone.toggle()
-
+        
         self.browseButton.setEnabled(False)
         self.browseBox.setEnabled(False)
         self.modelsBox.setEnabled(False)
         self.modelsButton.setEnabled(False)
         self.transcribeWav.setEnabled(False)
         self.openMicrophone.setEnabled(False)
+          
+        self.CheckConvertSR.setEnabled(False)
 
         self.show()
 
         # Setup Threadpool
         self.threadpool = QThreadPool()
         logging.debug("Multithreading with maximum %d threads" % self.threadpool.maxThreadCount())
-
+        
     @pyqtSlot()
     def mic_activate(self):
         logging.debug("Enable streaming widgets")
@@ -179,7 +193,8 @@ class App(QMainWindow):
         self.transcribeWav.setEnabled(False)
         self.openMicrophone.setStyleSheet('QPushButton {background-color: #70cc7c; color: black;}')
         self.openMicrophone.setEnabled(True)
-
+         
+        self.CheckConvertSR.setEnabled(True)
     @pyqtSlot()
     def wav_activate(self):
         logging.debug("Enable wav transcription widgets")
@@ -190,6 +205,8 @@ class App(QMainWindow):
         self.browseBox.setEnabled(True)
         self.modelsBox.setEnabled(True)
         self.modelsButton.setEnabled(True)
+        #
+        self.CheckConvertSR.setEnabled(True)
 
     @pyqtSlot()
     def browse_on_click(self):
@@ -249,7 +266,9 @@ class App(QMainWindow):
             self.openMicrophone.setStyleSheet('QPushButton {background-color: #70cc7c; color: black;}')
             self.openMicrophone.setEnabled(True)
         self.show()
+    
 
+     
     @pyqtSlot()
     def transcriptionStart_on_click(self):
         logging.debug('Transcription Start button clicked')
@@ -266,7 +285,76 @@ class App(QMainWindow):
 
         # Execute
         self.threadpool.start(worker)
-
+   
+     
+    @pyqtSlot()
+    def CheckConvert_SR_on_click(self):  
+        logging.debug('check and convert to 16000')
+        
+        logging.debug("self wave file",self.fileName)
+        
+        directory= 'Converted_16K_SR_audio'
+        
+        try:
+            if not os.path.exists(directory):
+                os.makedirs(directory)
+        except OSError:
+            logging.debug('Error: Creating directory. ' +  directory)
+              
+        dst = './Converted_16K_SR_audio/a1.wav'
+        
+        samplerate, data = wavfile.read(self.fileName)
+        
+        logging.debug("Current wave file sample rate is :",samplerate)
+             
+        inrate=samplerate
+        outrate=16000 
+        inchannels=1 
+        outchannels=1
+            
+        if not os.path.exists(self.fileName):
+            logging.debug('Source not found!')
+            return False
+    
+        if not os.path.exists(os.path.dirname(dst)):
+            os.makedirs(os.path.dirname(dst))
+        
+        try:
+            s_read = wave.open(self.fileName, 'r')
+            s_write = wave.open(dst, 'w')
+            
+        except:
+            logging.debug('Failed to open files!')
+            return False
+    
+        n_frames = s_read.getnframes()
+        
+        data = s_read.readframes(n_frames)
+                        
+        try:
+            converted = audioop.ratecv(data, 2, inchannels, inrate, outrate, None)
+             
+            if outchannels == 1 & inchannels != 1:
+                converted[0] = audioop.tomono(converted[0], 2, 1, 0)
+            logging.debug("Converted to 16k sample Rate ")
+        except:
+            logging.debug('Failed to downsample wav')
+            return False
+    
+        try:
+            s_write.setparams((outchannels, 2, outrate, 0, 'NONE', 'Uncompressed'))
+            s_write.writeframes(converted[0])
+        except:
+            logging.debug('Failed to write wav')
+            return False
+    
+        try:
+            s_read.close()
+            s_write.close()
+        except:
+            logging.debug('Failed to close wav files')
+            return False
+   
     @pyqtSlot()
     def openMicrophone_on_click(self):
         logging.debug('Preparing to open microphone...')
@@ -274,7 +362,7 @@ class App(QMainWindow):
         # Clear out older data
         self.textboxTranscript.setPlainText("")
         self.show()
-
+         
         # Threaded signal passing worker functions
         # Prepare env for capturing from microphone and offload work to micWorker worker thread
         if (not self.openMicrophone.isChecked()):
@@ -284,12 +372,16 @@ class App(QMainWindow):
             logging.debug("Preparing for transcription...")
 
             sctx = self.model[0].createStream()
+            
+             
             subproc = subprocess.Popen(shlex.split('rec -q -V0 -e signed -L -c 1 -b 16 -r 16k -t raw - gain -2'),
-                                       stdout=subprocess.PIPE,
-                                       bufsize=0)
+                                        stdout=subprocess.PIPE,
+                                        bufsize=1,shell=True)
+                                   
             self.textboxTranscript.insertPlainText('You can start speaking now\n\n')
             self.show()
             logging.debug('You can start speaking now')
+             
             context = (sctx, subproc, self.model[0])
 
             # Pass the state to streaming worker
@@ -302,6 +394,8 @@ class App(QMainWindow):
             self.threadpool.start(worker)
         else:
             logging.debug("Stop Recording")
+            
+    
 
     '''
     Capture the audio stream from the microphone.

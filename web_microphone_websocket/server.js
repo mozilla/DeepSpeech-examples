@@ -218,7 +218,7 @@ io.on('connection', function(socket) {
 	});
 });
 
-app.listen(SERVER_PORT, 'localhost', () => {
+app.listen(SERVER_PORT, '0.0.0.0', () => {
 	console.log('Socket server listening on:', SERVER_PORT);
 });
 

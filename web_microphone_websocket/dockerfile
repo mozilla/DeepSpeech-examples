@@ -1,0 +1,13 @@
+FROM node:14-buster
+
+EXPOSE 3000 4000
+
+WORKDIR /deepspeech
+
+COPY package.json .
+
+RUN yarn
+
+ADD . .
+
+ENTRYPOINT [ "/deepspeech/entrypoint.sh" ]

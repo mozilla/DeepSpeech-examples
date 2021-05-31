@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  deepspeech:
+    build: .
+    restart: unless-stopped
+    environment: 
+    - CI=true
+    volumes: 
+    - /path/to/deepspeech-0.9.3-models.pbmm:/deepspeech/deepspeech-0.9.3-models.pbmm:ro
+    - /path/to/deepspeech-0.9.3-models.scorer:/deepspeech/deepspeech-0.9.3-models.scorer:ro
+    ports: 
+    - 3000:3000
+    - 4000:4000
+

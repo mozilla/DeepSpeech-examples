@@ -56,6 +56,6 @@ toml==0.10.1
 tqdm==4.46.1
 tts==0.0.2+f320992
 typed-ast==1.4.1
-urllib3==1.25.9
+urllib3==1.26.5
 Werkzeug==1.0.1
 wrapt==1.12.1

@@ -21,7 +21,7 @@ Ubuntu/Debian
 A list of distributions where the package is available can be found at: https://pkgs.org/download/sox
 
 #### 0.1 Download Deepspeech 
-Either clone from git via git clone, or Download a version from the release page
+Either clone from git via git clone, or Download a version from the [release page](https://github.com/mozilla/DeepSpeech/releases/)
 
 For the next steps we assume you have extracted the files to `~/Deepspeech`
 

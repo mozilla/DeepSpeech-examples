@@ -201,7 +201,7 @@ function startMicrophone(callback) {
 	
 	createStream();
 	
-	var microphone = mic({
+	microphone = mic({
 		rate: '16000',
 		channels: '1',
 		debug: false,

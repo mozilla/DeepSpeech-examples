@@ -10,7 +10,7 @@ import delegator
 # first loop over the files
 # convert them to wave
 
-# record things in 16000hz in the future or you gret this
+# record things in 16000hz in the future or you get this
 # Warning: original sample rate (44100) is different than 16000h.z Resampling might produce erratic speech recognition.
 
 

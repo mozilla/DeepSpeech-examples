@@ -26,7 +26,7 @@ Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
 Markdown==3.2.2
 MarkupSafe==1.1.1
-numpy==1.17.3
+numpy==1.22.0
 oauthlib==3.1.0
 opt-einsum==3.2.1
 packaging==20.4

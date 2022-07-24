@@ -117,10 +117,10 @@ class VADAudio(Audio):
                 yield self.read_resampled()
 
     def vad_collector(self, padding_ms=300, ratio=0.75, frames=None):
-        """Generator that yields series of consecutive audio frames comprising each utterence, separated by yielding a single None.
+        """Generator that yields series of consecutive audio frames comprising each utterance, separated by yielding a single None.
             Determines voice activity by ratio of frames in padding_ms. Uses a buffer to include padding_ms prior to being triggered.
             Example: (frame, ..., frame, None, frame, ..., frame, None, ...)
-                      |---utterence---|        |---utterence---|
+                      |---utterance---|        |---utterance---|
         """
         if frames is None: frames = self.frame_generator()
         num_padding_frames = padding_ms // self.frame_duration_ms
@@ -187,7 +187,7 @@ def main(ARGS):
             if ARGS.savewav: wav_data.extend(frame)
         else:
             if spinner: spinner.stop()
-            logging.debug("end utterence")
+            logging.debug("end utterance")
             if ARGS.savewav:
                 vad_audio.write_wav(os.path.join(ARGS.savewav, datetime.now().strftime("savewav_%Y-%m-%d_%H-%M-%S_%f.wav")), wav_data)
                 wav_data = bytearray()
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     parser.add_argument('--nospinner', action='store_true',
                         help="Disable spinner")
     parser.add_argument('-w', '--savewav',
-                        help="Save .wav files of utterences to given directory")
+                        help="Save .wav files of utterances to given directory")
     parser.add_argument('-f', '--file',
                         help="Read from .wav file instead of microphone")
 

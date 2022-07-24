@@ -42,7 +42,7 @@ Usage
                            speech, 3 the most aggressive. Default: 3
      --nospinner           Disable spinner
      -w SAVEWAV, --savewav SAVEWAV
-                           Save .wav files of utterences to given directory
+                           Save .wav files of utterances to given directory
      -f FILE, --file FILE  Read from .wav file instead of microphone
      -m MODEL, --model MODEL
                            Path to the model (protocol buffer binary file, or

@@ -49,7 +49,7 @@ soundfile==0.10.3.post1
 tensorboard==2.1.1
 tensorboard-plugin-wit==1.6.0.post3
 tensorflow-estimator==2.1.0
-tensorflow-gpu==2.2.0
+tensorflow-gpu==2.12.0
 tensorflow-gpu-estimator==2.2.0
 termcolor==1.1.0
 toml==0.10.1
